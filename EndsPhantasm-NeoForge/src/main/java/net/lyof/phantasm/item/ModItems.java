@@ -52,7 +52,7 @@ public class ModItems {
     public static final DeferredHolder<Item, Item> CHORUS_FRUIT_SALAD = ITEMS.register("chorus_fruit_salad", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(6).saturationModifier(1.5f).build()).craftRemainder(Items.BOWL).stacksTo(ConfigEntries.chorusSaladStack)) {
         @Override
         public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entity) {
-            if (!ConfigEntries.chorusSaladTp) {
+            if (ConfigEntries.chorusSaladTp) {
                 if (level instanceof ServerLevel server && !entity.isShiftKeyDown()) {
                     ResourceKey<Level> registryKey = level.dimension() == Level.END ? Level.OVERWORLD : Level.END;
                     ServerLevel serverWorld = server.getServer().getLevel(registryKey);

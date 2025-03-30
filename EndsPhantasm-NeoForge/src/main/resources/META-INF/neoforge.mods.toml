@@ -7,9 +7,9 @@ file = "META-INF/accesstransformer.cfg"
 
 [[mods]]
 modId = "phantasm"
-version = "1.0.2"
+version = "1.0.3"
 displayName = "End's Phantasm"
-credits = "Ported to Forge with love by SashaKYotoz:)"
+credits = "Ported to NeoForge with love by SashaKYotoz:)"
 logoFile = "icon.png"
 authors = "Lyof"
 description = "The vanilla friendly End update we were all waiting for"

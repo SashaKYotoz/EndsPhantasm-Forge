@@ -3,8 +3,10 @@ package net.lyof.phantasm.block.custom;
 import com.mojang.serialization.MapCodec;
 import net.lyof.phantasm.effect.ModEffects;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
@@ -39,6 +41,15 @@ public class PomeBlock extends FallingBlock {
     protected void falling(FallingBlockEntity entity) {
         super.falling(entity);
         entity.disableDrop();
+    }
+    protected void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
+        if (isFreeBelow(level.getBlockState(pos.below())) && pos.getY() >= level.getMinBuildHeight()) {
+            FallingBlockEntity fallingblockentity = FallingBlockEntity.fall(level, pos, state);
+            this.falling(fallingblockentity);
+        }
+    }
+    private boolean isFreeBelow(BlockState state) {
+        return state.isAir() || state.is(BlockTags.FIRE) || state.liquid();
     }
 
     @Override
