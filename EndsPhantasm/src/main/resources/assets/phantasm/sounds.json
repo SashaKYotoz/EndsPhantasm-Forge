@@ -1,0 +1,23 @@
+{
+  "music_disc_abruption": {
+    "sounds": [
+      {
+        "name": "phantasm:music_disc_abruption",
+        "stream": true
+      }
+    ]
+  },
+  "entity.behemoth_dying": {
+    "sounds": [
+      "phantasm:entity/behemoth_dying0",
+      "phantasm:entity/behemoth_dying1"
+    ]
+  },
+  "entity.behemoth_ambient": {
+    "sounds": [
+      "phantasm:entity/behemoth_ambient0",
+      "phantasm:entity/behemoth_ambient1",
+      "phantasm:entity/behemoth_ambient2"
+    ]
+  }
+}

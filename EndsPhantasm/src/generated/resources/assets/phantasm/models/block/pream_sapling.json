@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "phantasm:block/pream_sapling"
+  },
+  "render_type": "minecraft:translucent"
+}

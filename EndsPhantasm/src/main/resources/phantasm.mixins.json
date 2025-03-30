@@ -1,0 +1,43 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "net.lyof.phantasm.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "phantasm.refmap.json",
+  "mixins": [
+    "AnvilMenuMixin",
+    "BiomeSourceMixin",
+    "ChorusFlowerBlockMixin",
+    "ChorusPlantBlockMixin",
+    "ChunkNoiseSamplerMixin",
+    "ClimateSamplerMixin",
+    "DragonFireballMixin",
+    "EndermanMixin",
+    "EndGatewayBlockEntityMixin",
+    "EndSpikeFeatureMixin",
+    "EndSpikeFeatureSpikeMixin",
+    "EntityMixin",
+    "FireworkRocketItemMixin",
+    "ItemMixin",
+    "LivingEntityMixin",
+    "ClimateParameterListMixin",
+    "MobMixin",
+    "MultiNoiseBiomeSourceMixin",
+    "MultiNoiseBiomeSourceParameterListMixin",
+    "NoiseConfigMixin",
+    "NoiseRouterMixin",
+    "PlantBlockMixin",
+    "PlayerEntityMixin",
+    "ServerPlayerEntityMixin",
+    "TheEndBiomeSourceMixin",
+    "access.EndGatewayBlockEntityAccessor",
+    "access.NoiseGeneratorSettingsAccess"
+  ],
+  "client": [
+    "MinecraftMixin",
+    "VexRenderMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

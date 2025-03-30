@@ -1,0 +1,14 @@
+{
+  "name": "phantasm:obsidian_tower/start_pool",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "element": {
+        "element_type": "minecraft:feature_pool_element",
+        "feature": "phantasm:obsidian_tower",
+        "projection": "rigid"
+      },
+      "weight": 1
+    }
+  ]
+}

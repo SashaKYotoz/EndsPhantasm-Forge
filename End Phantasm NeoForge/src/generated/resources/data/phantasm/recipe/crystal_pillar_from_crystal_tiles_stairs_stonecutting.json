@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "phantasm:crystal_tiles_stairs"
+  },
+  "result": {
+    "count": 1,
+    "id": "phantasm:crystal_pillar"
+  }
+}

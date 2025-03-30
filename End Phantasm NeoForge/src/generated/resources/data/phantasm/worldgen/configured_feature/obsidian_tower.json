@@ -1,0 +1,10 @@
+{
+  "type": "phantasm:obsidian_tower",
+  "config": {
+    "count": {
+      "type": "minecraft:uniform",
+        "max_inclusive": 50,
+        "min_inclusive": 30
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smelting",
+  "category": "food",
+  "cookingtime": 200,
+  "experience": 5.0,
+  "ingredient": {
+    "item": "phantasm:behemoth_meat"
+  },
+  "result": {
+    "id": "phantasm:behemoth_steak"
+  }
+}

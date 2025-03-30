@@ -1,0 +1,19 @@
+modLoader="javafml"
+loaderVersion="[47,)"
+license="GPL-3.0"
+
+[[mods]]
+modId="phantasm"
+version="1.0.1"
+displayName="End's Phantasm"
+credits="Ported to Forge with love by SashaKYotoz:)"
+logoFile= "icon.png"
+authors="Lyof"
+description="The vanilla friendly End update we were all waiting for"
+
+[[dependencies.phantasm]]
+modId="minecraft"
+mandatory=true
+versionRange="[1.20.1]"
+ordering="NONE"
+side="BOTH"

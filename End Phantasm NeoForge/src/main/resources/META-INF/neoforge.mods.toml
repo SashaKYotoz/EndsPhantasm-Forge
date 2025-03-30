@@ -1,0 +1,33 @@
+modLoader = "javafml" #mandatory
+loaderVersion = "${loader_version_range}" #mandatory
+license = "${mod_license}"
+
+[[accessTransformers]]
+file = "META-INF/accesstransformer.cfg"
+
+[[mods]]
+modId = "phantasm"
+version = "1.0.2"
+displayName = "End's Phantasm"
+credits = "Ported to Forge with love by SashaKYotoz:)"
+logoFile = "icon.png"
+authors = "Lyof"
+description = "The vanilla friendly End update we were all waiting for"
+
+[[mixins]]
+config = "phantasm.mixins.json"
+
+[[dependencies.phantasm]] #optional
+# the modid of the dependency
+modId = "neoforge" #mandatory
+type = "required" #mandatory
+versionRange = "[21,)" #mandatory
+ordering = "NONE"
+# Side this dependency is applied on - BOTH, CLIENT, or SERVER
+side = "BOTH"
+[[dependencies.phantasm]]
+modId = "minecraft"
+mandatory = true
+versionRange = "[1.21.1]"
+ordering = "NONE"
+side = "BOTH"

@@ -1,0 +1,8 @@
+{
+  "comparator_output": 8,
+  "description": {
+    "translate": "jukebox_song.phantasm.abruption"
+  },
+  "length_in_seconds": 239,
+  "sound_event": "phantasm:music_disc_abruption"
+}

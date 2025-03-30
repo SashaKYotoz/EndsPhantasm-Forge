@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "phantasm:raw_purpur_bricks_stairs"
+  },
+  "result": {
+    "count": 1,
+    "id": "phantasm:raw_purpur_tiles"
+  }
+}
