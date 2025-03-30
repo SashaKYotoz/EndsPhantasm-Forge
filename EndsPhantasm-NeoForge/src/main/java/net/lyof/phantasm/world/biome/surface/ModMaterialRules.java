@@ -171,19 +171,22 @@ public class ModMaterialRules {
                 dreaming_den,
                 acidburnt_abysses);
     }
+
     @SubscribeEvent
     public static void addModMaterialRules(ServerAboutToStartEvent event) {
         LevelStem levelStem = event.getServer().registryAccess().registryOrThrow(Registries.LEVEL_STEM).get(LevelStem.END);
-        ChunkGenerator chunkGenerator = levelStem.generator();
-        boolean hasEndBiomes = chunkGenerator.getBiomeSource().possibleBiomes().stream().anyMatch(biomeHolder -> biomeHolder.unwrapKey().orElseThrow().location().getNamespace().equals("phantasm"));
-        if (hasEndBiomes) {
-            if (chunkGenerator instanceof NoiseBasedChunkGenerator generator) {
-                NoiseGeneratorSettings settings = generator.generatorSettings().getDelegate().value();
-                ((NoiseGeneratorSettingsAccess) (Object) settings).addSurfaceRule(
-                        SurfaceRules.sequence(
-                                ModMaterialRules.createDreamingDenRule(), generator.generatorSettings().getDelegate().value().surfaceRule()
-                        )
-                );
+        if (levelStem != null) {
+            ChunkGenerator chunkGenerator = levelStem.generator();
+            boolean hasEndBiomes = chunkGenerator.getBiomeSource().possibleBiomes().stream().anyMatch(biomeHolder -> biomeHolder.unwrapKey().orElseThrow().location().getNamespace().equals("phantasm"));
+            if (hasEndBiomes) {
+                if (chunkGenerator instanceof NoiseBasedChunkGenerator generator) {
+                    NoiseGeneratorSettings settings = generator.generatorSettings().getDelegate().value();
+                    ((NoiseGeneratorSettingsAccess) (Object) settings).addSurfaceRule(
+                            SurfaceRules.sequence(
+                                    ModMaterialRules.createDreamingDenRule(), generator.generatorSettings().getDelegate().value().surfaceRule()
+                            )
+                    );
+                }
             }
         }
     }

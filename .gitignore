@@ -29,13 +29,13 @@ EndsPhantasm/out/
 EndsPhantasm/classes/
 EndsPhantasm/run/
 EndsPhantasm/run-data/
-End Phantasm NeoForge/.gradle/
-End Phantasm NeoForge/.idea/
-End Phantasm NeoForge/build/
-End Phantasm NeoForge/out/
-End Phantasm NeoForge/classes/
-End Phantasm NeoForge/run/
-End Phantasm NeoForge/run-data/
+EndsPhantasm-NeoForge/.gradle/
+EndsPhantasm-NeoForge/.idea/
+EndsPhantasm-NeoForge/build/
+EndsPhantasm-NeoForge/out/
+EndsPhantasm-NeoForge/classes/
+EndsPhantasm-NeoForge/run/
+EndsPhantasm-NeoForge/run-data/
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*

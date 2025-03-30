@@ -106,6 +106,7 @@
   "item.phantasm.crystie_spawn_egg": "Яйце виклику кристі",
   "item.phantasm.music_disc_abruption": "Платівка",
   "item.phantasm.music_disc_abruption.desc": "Dylanvhs - Відторгнення",
+  "jukebox_song.phantasm.abruption": "Dylanvhs - Відторгнення",
   "item.phantasm.oblifruit": "Обліфрукт",
   "item.phantasm.pome_slice": "Примовий шматочок",
   "item.phantasm.pream_berry": "Примова ягода",
@@ -113,5 +114,6 @@
   "item.phantasm.shattered_pendant.desc": "Дозволяє повертатися до вашої останньої безпечної локації.\nАвтоматично активується при падінні у безодню",
   "itemgroup.phantasm": "Phantasm",
   "sounds.phantasm.music_disc_abruption": "Dylanvhs - Відторгнення, грає",
-  "tooltip.xp_boosted": "Ефективність збільшується з досвідом."
+  "tooltip.xp_boosted": "Ефективність збільшується з досвідом.",
+  "entity.phantasm.choral_arrow": "Choral Arrow"
 }

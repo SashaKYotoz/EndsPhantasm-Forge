@@ -73,7 +73,7 @@ public class ModItems {
             .effect(() -> new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 300, 1, true, true), 1)
             .effect(() -> new MobEffectInstance(MobEffects.DAMAGE_BOOST, 300, 0, true, true), 1).build())));
 
-    public static final DeferredItem<ShatteredPendantItem> SHATTERED_PENDANT = ITEMS.register("shattered_pendant", () -> new ShatteredPendantItem(new Item.Properties().component(SHATTERED_PENDANT_DATA.get(),new ShatteredPendantData(0,0,0,"minecraft:overworld"))));
+    public static final DeferredItem<ShatteredPendantItem> SHATTERED_PENDANT = ITEMS.register("shattered_pendant", () -> new ShatteredPendantItem(new Item.Properties().component(SHATTERED_PENDANT_DATA.get(), new ShatteredPendantData(0, 0, 0, "minecraft:overworld"))));
     public static final DeferredItem<Item> POME_SLICE = ITEMS.register("pome_slice", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(4).saturationModifier(1.3f).build())));
     public static final DeferredItem<Item> MUSIC_DISC_ABRUPTION = ITEMS.register("music_disc_abruption", () -> new Item(new Item.Properties().stacksTo(1).rarity(Rarity.RARE).jukeboxPlayable(ModSounds.ABRUPTION)));
     public static final DeferredItem<ChoralArrowItem> CHORAL_ARROW = ITEMS.register("choral_arrow", () -> new ChoralArrowItem(new Item.Properties()));
