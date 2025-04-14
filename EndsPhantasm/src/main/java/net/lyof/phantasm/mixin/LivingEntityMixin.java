@@ -1,5 +1,7 @@
 package net.lyof.phantasm.mixin;
 
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.lyof.phantasm.effect.ModEffects;
 import net.lyof.phantasm.item.ModItems;
 import net.minecraft.world.damagesource.DamageSource;
@@ -14,7 +16,6 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -33,8 +34,8 @@ public abstract class LivingEntityMixin extends Entity {
         super(type, level);
     }
 
-    @Redirect(method = "eat", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;shrink(I)V"))
-    public void keepOblifruit(ItemStack instance, int amount) {
+    @WrapOperation(method = "eat", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;shrink(I)V"))
+    public void keepOblifruit(ItemStack instance, int i, Operation<Void> original) {
         if (instance.is(ModItems.OBLIFRUIT.get()) && Math.random() < 0.05 && instance.getCount() < instance.getMaxStackSize()) {
             instance.grow(1);
             return;

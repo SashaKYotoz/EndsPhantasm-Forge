@@ -1,5 +1,7 @@
 package net.lyof.phantasm.mixin;
 
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -17,7 +19,6 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(value = ServerPlayer.class, priority = 990)
@@ -35,8 +36,8 @@ public abstract class ServerPlayerEntityMixin extends Entity {
         super(type, level);
     }
 
-    @Redirect(method = "lambda$changeDimension$8", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/level/ServerPlayer;createEndPlatform(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/core/BlockPos;)V"))
-    public void noPlatform(ServerPlayer instance, ServerLevel serverlevel, BlockPos pos) {
+    @WrapOperation(method = "lambda$changeDimension$8", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/level/ServerPlayer;createEndPlatform(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/core/BlockPos;)V"))
+    public void noPlatform(ServerPlayer instance, ServerLevel serverlevel, BlockPos pos, Operation<Void> original) {
         BlockPos.MutableBlockPos mutable = ServerLevel.END_SPAWN_POINT.mutable();
         for (int i = -2; i <= 2; ++i) {
             for (int j = -2; j <= 2; ++j) {

@@ -1,5 +1,7 @@
 package net.lyof.phantasm.mixin;
 
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.mojang.datafixers.util.Pair;
 import net.lyof.phantasm.Phantasm;
 import net.lyof.phantasm.world.biome.EndDataCompat;
@@ -15,7 +17,6 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
-import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.ArrayList;
@@ -29,9 +30,9 @@ public abstract class ClimateParameterListMixin<T> {
     @Unique
     private final List<Pair<Climate.ParameterPoint, T>> endEntries = new ArrayList<>();
 
-    @Redirect(method = "<init>", at = @At(value = "INVOKE",
+    @WrapOperation(method = "<init>", at = @At(value = "INVOKE",
             target = "Lnet/minecraft/world/level/biome/Climate$RTree;create(Ljava/util/List;)Lnet/minecraft/world/level/biome/Climate$RTree;"))
-    public Climate.RTree<T> addEndBiomes(List<Pair<Climate.ParameterPoint, T>> entries) {
+    public Climate.RTree<T> addEndBiomes(List<Pair<Climate.ParameterPoint, T>> entries, Operation<Climate.RTree<T>> original) {
         Climate.ParameterPoint highlands = null;
         for (Pair<Climate.ParameterPoint, T> e : entries) {
             if (e.getSecond() instanceof Holder r && r.is(Biomes.END_HIGHLANDS))
@@ -39,8 +40,6 @@ public abstract class ClimateParameterListMixin<T> {
         }
         if (highlands != null && ModBiomes.LOOKUP != null) {
             int customCount = EndDataCompat.getEnabledBiomes().size();
-
-            // hook the custom biomes in
             int j = 0;
             for (ResourceKey<Biome> biome : EndDataCompat.getEnabledBiomes()) {
                 Phantasm.log("Adding " + biome.location() + " to the End biome source at slice " + (j / 2 + 1) + " out of " + customCount);
@@ -50,13 +49,9 @@ public abstract class ClimateParameterListMixin<T> {
                 ));
                 j += 2;
             }
-
-            // add all the default biomes
             this.endEntries.addAll(entries.stream()
                     .filter(p -> p.getSecond() instanceof Holder r && !r.is(Biomes.END_HIGHLANDS)
                             && !(r.unwrapKey().get() instanceof Holder k && EndDataCompat.contains(k))).toList());
-
-            // add back the end highlands
             for (int i = 1; i <= customCount; i += 2)
                 this.endEntries.add(new Pair<>(
                         splitHypercube(highlands, customCount, i),
