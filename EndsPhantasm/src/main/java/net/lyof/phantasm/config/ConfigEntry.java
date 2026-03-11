@@ -11,10 +11,6 @@ public class ConfigEntry<T> {
     private final List<String> path;
     private final T fallback;
 
-    public ConfigEntry(String path) {
-        this(path, null);
-    }
-
     public ConfigEntry(String path, @Nullable T fallback) {
         this.path = List.of(path.split("\\."));
         this.fallback = fallback;
@@ -37,12 +33,12 @@ public class ConfigEntry<T> {
                 if (Objects.equals(step, this.path.get(this.path.size() - 1)))
                     result = next.get(step);
                 else {
-                    Phantasm.log("Got past end of path : \"" + this.path + "\", defaulting to " + fallback);
+                    Phantasm.log("Couldn't find config value for path : \"" + this.path + "\", defaulting to " + fallback, 3);
                     return fallback;
                 }
             }
             if (next == null) {
-                Phantasm.log("Couldn't get to end of path : \"" + this.path + "\", defaulting to " + fallback);
+                Phantasm.log("Couldn't find config value for path : \"" + this.path + "\", defaulting to " + fallback, 3);
                 return fallback;
             }
         }
@@ -60,7 +56,7 @@ public class ConfigEntry<T> {
         if (fallback instanceof List)
             return (T) result;
 
-        Phantasm.log("Couldn't find config value for path : \"" + this.path + "\", defaulting to " + fallback);
+        Phantasm.log("Couldn't find config value for path : \"" + this.path + "\", defaulting to " + fallback, 3);
         return fallback;
     }
 }

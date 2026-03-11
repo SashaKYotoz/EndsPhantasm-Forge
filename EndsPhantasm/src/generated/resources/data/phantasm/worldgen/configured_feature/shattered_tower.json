@@ -1,0 +1,12 @@
+{
+  "type": "phantasm:shattered_tower",
+  "config": {
+    "count": {
+      "type": "minecraft:uniform",
+      "value": {
+        "max_inclusive": 70,
+        "min_inclusive": 50
+      }
+    }
+  }
+}

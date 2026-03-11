@@ -3,6 +3,5 @@
   "textures": {
     "edge": "phantasm:block/crystal_glass_pane_top",
     "pane": "phantasm:block/crystal_glass"
-  },
-  "render_type": "minecraft:translucent"
+  }
 }

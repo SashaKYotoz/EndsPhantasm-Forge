@@ -10,7 +10,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.BlockColumnConfiguration;
-import net.minecraft.world.level.levelgen.feature.configurations.ColumnFeatureConfiguration;
 
 public class OblivineFeature extends Feature<BlockColumnConfiguration> {
     public static final Feature<BlockColumnConfiguration> INSTANCE = new OblivineFeature(BlockColumnConfiguration.CODEC);

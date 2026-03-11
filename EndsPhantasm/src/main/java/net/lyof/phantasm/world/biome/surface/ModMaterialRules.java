@@ -30,22 +30,22 @@ public class ModMaterialRules {
 
         SurfaceRules.ConditionSource band_noise =
                 SurfaceRules.noiseCondition(Noises.SURFACE, 0);
-        int raw_purpur_offset = EndDataCompat.getCompatibilityMode().equals("endercon") ? 20 : 0;
-        raw_purpur_offset += ConfigEntries.rawPurpurOffset;
+        int start = EndDataCompat.getCompatibilityMode().equals("endercon") ? 20 : 0;
+        start += ConfigEntries.rawPurpurStart;
         SurfaceRules.ConditionSource band_y_below = SurfaceRules.verticalGradient("raw_purpur_stripes_below1",
-                VerticalAnchor.absolute(raw_purpur_offset + 40), VerticalAnchor.absolute(raw_purpur_offset + 42));
+                VerticalAnchor.absolute(start + 40), VerticalAnchor.absolute(start + 42));
         SurfaceRules.ConditionSource band_y_above = SurfaceRules.not(SurfaceRules.verticalGradient("raw_purpur_stripes_above1",
-                VerticalAnchor.absolute(raw_purpur_offset + 35), VerticalAnchor.absolute(raw_purpur_offset + 37)));
+                VerticalAnchor.absolute(start + 35), VerticalAnchor.absolute(start + 37)));
 
         SurfaceRules.ConditionSource band_y_below2 = SurfaceRules.verticalGradient("raw_purpur_stripes_below2",
-                VerticalAnchor.absolute(raw_purpur_offset + 32), VerticalAnchor.absolute(34));
+                VerticalAnchor.absolute(start + 32), VerticalAnchor.absolute(34));
         SurfaceRules.ConditionSource band_y_above2 = SurfaceRules.not(SurfaceRules.verticalGradient("raw_purpur_stripes_above2",
-                VerticalAnchor.absolute(raw_purpur_offset + 27), VerticalAnchor.absolute(raw_purpur_offset + 29)));
+                VerticalAnchor.absolute(start + 27), VerticalAnchor.absolute(start + 29)));
 
         SurfaceRules.ConditionSource band_y_below3 = SurfaceRules.verticalGradient("raw_purpur_stripes_below3",
-                VerticalAnchor.absolute(raw_purpur_offset + 24), VerticalAnchor.absolute(raw_purpur_offset + 26));
-        SurfaceRules.ConditionSource band_y_above3 = SurfaceRules.not(SurfaceRules.verticalGradient(raw_purpur_offset + "raw_purpur_stripes_above3",
-                VerticalAnchor.absolute(raw_purpur_offset + 19), VerticalAnchor.absolute(raw_purpur_offset + 21)));
+                VerticalAnchor.absolute(start + 24), VerticalAnchor.absolute(start + 26));
+        SurfaceRules.ConditionSource band_y_above3 = SurfaceRules.not(SurfaceRules.verticalGradient(start + "raw_purpur_stripes_above3",
+                VerticalAnchor.absolute(start + 19), VerticalAnchor.absolute(start + 21)));
 
         // RAW PURPUR RULES
         SurfaceRules.RuleSource raw_purpur_stripes =

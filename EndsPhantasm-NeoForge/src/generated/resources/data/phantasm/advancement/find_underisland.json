@@ -7,13 +7,13 @@
           {
             "condition": "minecraft:location_check",
             "predicate": {
-              "biome": "phantasm:dreaming_den",
               "position": {
                 "y": {
-                  "max": 29.0,
-                  "min": 0.0
+                  "max": 29,
+                  "min": 0
                 }
-              }
+              },
+              "biomes": "phantasm:dreaming_den"
             }
           }
         ]

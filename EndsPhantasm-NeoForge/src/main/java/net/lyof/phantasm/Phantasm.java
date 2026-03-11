@@ -24,6 +24,7 @@ import net.minecraft.world.item.alchemy.PotionBrewing;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -57,6 +58,10 @@ public class Phantasm {
             modEventBus.addListener(this::clientSetup);
     }
 
+    public static boolean isModLoaded(String s) {
+        return ModList.get() != null && ModList.get().isLoaded(s);
+    }
+
     private void commonSetup(FMLCommonSetupEvent event) {
         if (ConfigEntries.doDreamingDenBiome)
             event.enqueueWork(() -> TheEndBiomes.addHighlandsBiome(ModBiomes.DREAMING_DEN, ConfigEntries.dreamingDenWeight));
@@ -73,6 +78,7 @@ public class Phantasm {
         LOGGER.info(String.valueOf(message));
         return message;
     }
+
     public static ResourceLocation makeID(String id) {
         return ResourceLocation.fromNamespaceAndPath(MOD_ID, id);
     }

@@ -26,6 +26,6 @@ public abstract class EndermanMixin extends Monster {
     public void cancelDragonFightStare(Player player, CallbackInfoReturnable<Boolean> cir) {
         List<EnderDragon> list = player.level().getEntities(EntityTypeTest.forClass(EnderDragon.class),
                 new AABB(player.getOnPos()).inflate(100), a -> true);
-        if (ConfigEntries.noEndermenFight && !list.isEmpty()) cir.setReturnValue(false);
+        if (ConfigEntries.passiveEndermen && !list.isEmpty()) cir.setReturnValue(false);
     }
 }

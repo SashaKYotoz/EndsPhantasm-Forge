@@ -23,7 +23,7 @@ public class ItemMixin {
         if (stack.is(ModTags.Items.XP_BOOSTED))
             tooltipComponents.add(Component.translatable("tooltip.xp_boosted").withStyle(ChatFormatting.DARK_GREEN));
     }
-    @Inject(at = @At("RETURN"), method = "isValidRepairItem")
+    @Inject(at = @At("RETURN"), method = "isValidRepairItem", cancellable = true)
     public void universalRepair(ItemStack itemStack, ItemStack ingredient, CallbackInfoReturnable<Boolean> cir) {
         if (ingredient.is(ModTags.Items.XP_BOOSTED))
             cir.setReturnValue(cir.getReturnValue() || ingredient.is(ModBlocks.OBLIVION.get().asItem()));

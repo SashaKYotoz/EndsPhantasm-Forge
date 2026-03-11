@@ -1,0 +1,15 @@
+{
+  "loot_table": "phantasm:chests/challenges/elytra",
+  "objective": 10,
+  "level_cost": 10,
+  "post_dragon": false,
+  "monsters": [
+    {
+      "weight": 10,
+      "entity": "minecraft:vex",
+      "attributes": {
+        "minecraft:generic.max_health": 1.5
+      }
+    }
+  ]
+}

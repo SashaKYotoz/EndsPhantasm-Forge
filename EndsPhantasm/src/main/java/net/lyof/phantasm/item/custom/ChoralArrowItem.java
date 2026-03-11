@@ -1,6 +1,6 @@
 package net.lyof.phantasm.item.custom;
 
-import net.lyof.phantasm.entities.custom.ChoralArrowEntity;
+import net.lyof.phantasm.entity.custom.ChoralArrowEntity;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.LivingEntity;

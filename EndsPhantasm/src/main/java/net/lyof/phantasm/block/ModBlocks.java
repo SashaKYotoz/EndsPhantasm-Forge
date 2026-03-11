@@ -1,8 +1,8 @@
 package net.lyof.phantasm.block;
 
 import net.lyof.phantasm.Phantasm;
-import net.lyof.phantasm.block.custom.DirectionalBlock;
 import net.lyof.phantasm.block.custom.*;
+import net.lyof.phantasm.block.custom.DirectionalBlock;
 import net.lyof.phantasm.block.custom.signs.ModHangingSignBlock;
 import net.lyof.phantasm.block.custom.signs.ModStandingSignBlock;
 import net.lyof.phantasm.block.custom.signs.ModWallHangingSignBlock;
@@ -30,6 +30,7 @@ import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.block.state.properties.WoodType;
 import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -72,26 +73,38 @@ public class ModBlocks {
     public static final RegistryObject<Block> FALLEN_STAR = registerBlock("fallen_star", () -> new Block(BlockBehaviour.Properties.copy(Blocks.DIAMOND_BLOCK).mapColor(MapColor.COLOR_LIGHT_BLUE).lightLevel((blockState) -> 15)));
     public static final RegistryObject<Block> POLISHED_OBSIDIAN = registerBlock("polished_obsidian", () -> new Block(PolishedObsidianMaterial));
     public static final RegistryObject<Block> POLISHED_OBSIDIAN_BRICKS = registerBlock("polished_obsidian_bricks", () -> new Block(PolishedObsidianMaterial));
-    public static final RegistryObject<Block> POLISHED_OBSIDIAN_BRICKS_STAIRS = registerBlock("polished_obsidian_bricks_stairs", () -> new StairBlock(() -> POLISHED_OBSIDIAN_BRICKS.get().defaultBlockState(), PolishedObsidianMaterial), BLOCK_CUTOUT);
-    public static final RegistryObject<Block> POLISHED_OBSIDIAN_BRICKS_SLAB = registerBlock("polished_obsidian_bricks_slab", () -> new SlabBlock(PolishedObsidianMaterial), BLOCK_CUTOUT);
+    public static final RegistryObject<Block> POLISHED_OBSIDIAN_BRICK_STAIRS = registerBlock("polished_obsidian_brick_stairs", () -> new StairBlock(() -> POLISHED_OBSIDIAN_BRICKS.get().defaultBlockState(), PolishedObsidianMaterial), BLOCK_CUTOUT);
+    public static final RegistryObject<Block> POLISHED_OBSIDIAN_BRICK_SLAB = registerBlock("polished_obsidian_brick_slab", () -> new SlabBlock(PolishedObsidianMaterial), BLOCK_CUTOUT);
+
+    public static final RegistryObject<Block> POLISHED_OBSIDIAN_PILLAR = registerBlock("polished_obsidian_pillar", () -> new RotatedPillarBlock(PolishedObsidianMaterial));
+    public static final RegistryObject<Block> CHISELED_OBSIDIAN = registerBlock("chiseled_obsidian", () -> new DirectionalBlock(PolishedObsidianMaterial));
+
+    public static final RegistryObject<Block> CHALLENGE_RUNE = registerBlock("challenge_rune", () -> new ChallengeRuneBlock(BlockBehaviour.Properties.of()
+            .mapColor(DyeColor.GRAY)
+            .pushReaction(PushReaction.BLOCK)
+            .strength(100, 1200)));
     // Crystal Blockset
     public static final RegistryObject<Block> CRYSTAL_SHARD = registerBlock("crystal_shard", () -> new CrystalShardBlock(CrystalMaterial.lightLevel(((b) -> 7)).sound(SoundType.GLASS)), BLOCK_CUTOUT);
     public static final RegistryObject<Block> VOID_CRYSTAL_SHARD = registerBlock("void_crystal_shard", () -> new CrystalShardBlock(CrystalMaterial), BLOCK_CUTOUT);
     public static final RegistryObject<Block> CRYSTAL_BLOCK = registerBlock("crystal_block", () -> new Block(CrystalMaterial));
     public static final RegistryObject<Block> CRYSTAL_TILES = registerBlock("crystal_tiles", () -> new Block(CrystalMaterial));
-    public static final RegistryObject<Block> CRYSTAL_TILES_STAIRS = registerBlock("crystal_tiles_stairs", () -> new StairBlock(() -> CRYSTAL_TILES.get().defaultBlockState(), CrystalMaterial), BLOCK_CUTOUT);
-    public static final RegistryObject<Block> CRYSTAL_TILES_SLAB = registerBlock("crystal_tiles_slab", () -> new SlabBlock(CrystalMaterial), BLOCK_CUTOUT);
+    public static final RegistryObject<Block> CRYSTAL_TILE_STAIRS = registerBlock("crystal_tile_stairs", () -> new StairBlock(() -> CRYSTAL_TILES.get().defaultBlockState(), CrystalMaterial), BLOCK_CUTOUT);
+    public static final RegistryObject<Block> CRYSTAL_TILE_SLAB = registerBlock("crystal_tile_slab", () -> new SlabBlock(CrystalMaterial), BLOCK_CUTOUT);
     public static final RegistryObject<Block> CRYSTAL_PILLAR = registerBlock("crystal_pillar", () -> new RotatedPillarBlock(CrystalMaterial));
+
     public static final RegistryObject<Block> CRYSTAL_GLASS = registerBlock("crystal_glass", () -> new Block(CrystalGlassMaterial.noOcclusion()), BLOCK_CUTOUT);
     public static final RegistryObject<Block> CRYSTAL_GLASS_PANE = registerBlock("crystal_glass_pane", () -> new StainedGlassPaneBlock(DyeColor.BLUE, CrystalGlassMaterial.noOcclusion()), BLOCK_CUTOUT);
     // Void Crystal Blockset
     public static final RegistryObject<Block> VOID_CRYSTAL_BLOCK = registerBlock("void_crystal_block", () -> new Block(CrystalMaterial));
     public static final RegistryObject<Block> VOID_CRYSTAL_TILES = registerBlock("void_crystal_tiles", () -> new Block(CrystalMaterial));
-    public static final RegistryObject<Block> VOID_CRYSTAL_TILES_STAIRS = registerBlock("void_crystal_tiles_stairs", () -> new StairBlock(() -> VOID_CRYSTAL_TILES.get().defaultBlockState(), CrystalGlassMaterial), BLOCK_CUTOUT);
-    public static final RegistryObject<Block> VOID_CRYSTAL_TILES_SLAB = registerBlock("void_crystal_tiles_slab", () -> new SlabBlock(CrystalMaterial), BLOCK_CUTOUT);
+    public static final RegistryObject<Block> VOID_CRYSTAL_TILE_STAIRS = registerBlock("void_crystal_tile_stairs", () -> new StairBlock(() -> VOID_CRYSTAL_TILES.get().defaultBlockState(), CrystalGlassMaterial), BLOCK_CUTOUT);
+    public static final RegistryObject<Block> VOID_CRYSTAL_TILE_SLAB = registerBlock("void_crystal_tile_slab", () -> new SlabBlock(CrystalMaterial), BLOCK_CUTOUT);
     public static final RegistryObject<Block> VOID_CRYSTAL_PILLAR = registerBlock("void_crystal_pillar", () -> new RotatedPillarBlock(CrystalGlassMaterial));
     public static final RegistryObject<Block> VOID_CRYSTAL_GLASS = registerBlock("void_crystal_glass", () -> new Block(CrystalGlassMaterial.noOcclusion()), BLOCK_CUTOUT);
     public static final RegistryObject<Block> VOID_CRYSTAL_GLASS_PANE = registerBlock("void_crystal_glass_pane", () -> new StainedGlassPaneBlock(DyeColor.BLUE, CrystalGlassMaterial.noOcclusion()), BLOCK_CUTOUT);
+
+    public static final RegistryObject<Block> DELAYER = registerBlock("delayer", () -> new DelayerBlock(BlockBehaviour.Properties.copy(Blocks.REPEATER)), BLOCK_CUTOUT);
+    public static final RegistryObject<Block> SPLITTER = registerBlock("splitter", () -> new SplitterBlock(BlockBehaviour.Properties.copy(Blocks.REPEATER)), BLOCK_CUTOUT);
     // Pream Blockset
     public static final RegistryObject<Block> STRIPPED_PREAM_LOG = log("stripped_pream_log", MapColor.COLOR_LIGHT_BLUE, MapColor.COLOR_BLUE, PreamWoodMaterial);
     public static final RegistryObject<Block> PREAM_LOG = log("pream_log", MapColor.COLOR_LIGHT_BLUE, MapColor.COLOR_BLUE, PreamWoodMaterial);
@@ -119,11 +132,14 @@ public class ModBlocks {
             return reader.getBlockState(pos.below()).is(BlockTags.DIRT) || reader.getBlockState(pos.below()).is(ModTags.Blocks.END_PLANTS_GROWABLE_ON);
         }
     }, BLOCK_CUTOUT);
+    public static final RegistryObject<Block> POTTED_PREAM_SAPLING = registerBlock("potted_pream_sapling", () -> new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT, PREAM_SAPLING, BlockBehaviour.Properties.of().instabreak().noOcclusion().pushReaction(PushReaction.DESTROY)), BLOCK_CUTOUT);
+    public static RegistryObject<Block> PREAM_CABINET = null;
+
     //Oblivion
     public static final RegistryObject<Block> OBLIVINE = registerBlock("oblivine", () -> new HangingFruitBlock(OblivionMaterial.instabreak().noCollission(),
             ModTags.Blocks.OBLIVINE_GROWABLE_ON, Block.box(2, 0, 2, 14, 16, 14), "oblifruit"), BLOCK_CUTOUT);
     public static final RegistryObject<Block> OBLIVION = registerBlock("oblivion", () -> new Block(BlockBehaviour.Properties.copy(Blocks.DIRT).mapColor(MapColor.COLOR_BLACK)), BLOCK_CUTOUT);
-    public static final RegistryObject<Block> CRYSTALILY = registerBlock("crystalily", () -> new HangingPlantBlock(BlockBehaviour.Properties.copy(Blocks.DIRT).mapColor(MapColor.COLOR_LIGHT_BLUE).instabreak().noOcclusion().lightLevel((blockState) -> 7).emissiveRendering((bs, br, bp) -> true), ModTags.Blocks.OBLIVINE_GROWABLE_ON, Block.box(0, 8, 0, 16, 16, 16)),BLOCK_CUTOUT);
+    public static final RegistryObject<Block> CRYSTALILY = registerBlock("crystalily", () -> new HangingPlantBlock(BlockBehaviour.Properties.copy(Blocks.DIRT).mapColor(MapColor.COLOR_LIGHT_BLUE).instabreak().noOcclusion().lightLevel((blockState) -> 7).emissiveRendering((bs, br, bp) -> true), ModTags.Blocks.OBLIVINE_GROWABLE_ON, Block.box(0, 8, 0, 16, 16, 16)), BLOCK_CUTOUT);
     // Vivid Nihilium
     public static final RegistryObject<Block> VIVID_NIHILIUM = registerBlock("vivid_nihilium", () -> new NihiliumBlock(BlockBehaviour.Properties.copy(Blocks.END_STONE).mapColor(MapColor.COLOR_CYAN).randomTicks()), BLOCK_CUTOUT);
     public static final RegistryObject<Block> VIVID_NIHILIS = registerBlock("vivid_nihilis", () -> new BushBlock(BlockBehaviour.Properties.copy(Blocks.WARPED_ROOTS).mapColor(MapColor.COLOR_CYAN)) {
@@ -175,13 +191,16 @@ public class ModBlocks {
             .mapColor(MapColor.CRIMSON_HYPHAE).offsetType(BlockBehaviour.OffsetType.NONE),
             ModTags.Blocks.DRALGAE_GROWABLE_ON,
             Block.box(5, 0, 5, 11, 16, 11)), BLOCK_CUTOUT);
-    public static final RegistryObject<Block> POME = registerBlock("pome", () -> new PomeBlock(pomeMaterial));
+    public static final RegistryObject<Block> POMB = registerBlock("pomb", () -> new PombBlock(pomeMaterial));
 
     // Raw Purpur
     public static final RegistryObject<Block> RAW_PURPUR = registerBlock("raw_purpur", () -> new Block(RawPurpurMaterial));
+    public static final RegistryObject<Block> RAW_PURPUR_COAL_ORE = registerBlock("raw_purpur_coal_ore", () -> new Block(BlockBehaviour.Properties.copy(Blocks.BLACKSTONE).mapColor(MapColor.DEEPSLATE)));
     public static final RegistryObject<Block> RAW_PURPUR_BRICKS = registerBlock("raw_purpur_bricks", () -> new Block(RawPurpurMaterial));
-    public static final RegistryObject<Block> RAW_PURPUR_BRICKS_STAIRS = registerBlock("raw_purpur_bricks_stairs", () -> new StairBlock(() -> RAW_PURPUR_BRICKS.get().defaultBlockState(), RawPurpurMaterial));
-    public static final RegistryObject<Block> RAW_PURPUR_BRICKS_SLAB = registerBlock("raw_purpur_bricks_slab", () -> new SlabBlock(RawPurpurMaterial));
+    public static final RegistryObject<Block> RAW_PURPUR_BRICK_STAIRS = registerBlock("raw_purpur_brick_stairs", () -> new StairBlock(() -> RAW_PURPUR_BRICKS.get().defaultBlockState(), RawPurpurMaterial));
+    public static final RegistryObject<Block> RAW_PURPUR_BRICK_SLAB = registerBlock("raw_purpur_brick_slab", () -> new SlabBlock(RawPurpurMaterial));
+    public static final RegistryObject<Block> RAW_PURPUR_BRICK_WALL = registerBlock("raw_purpur_brick_wall", () -> new WallBlock(RawPurpurMaterial));
+    public static final RegistryObject<Block> PURPUR_WALL = registerBlock("purpur_wall", () -> new WallBlock(RawPurpurMaterial));
     public static final RegistryObject<Block> RAW_PURPUR_TILES = registerBlock("raw_purpur_tiles", () -> new Block(RawPurpurMaterial));
     public static final RegistryObject<Block> RAW_PURPUR_PILLAR = registerBlock("raw_purpur_pillar", () -> new RotatedPillarBlock(RawPurpurMaterial));
     public static final RegistryObject<Block> PURPUR_LAMP = registerBlock("purpur_lamp", () -> new Block(BlockBehaviour.Properties.copy(Blocks.PURPUR_BLOCK).lightLevel((block) -> 15)));
@@ -189,13 +208,18 @@ public class ModBlocks {
     public static final RegistryObject<Block> CIRITE = registerBlock("cirite", () -> new Block(ciriteMaterial));
     public static final RegistryObject<Block> CIRITE_IRON_ORE = registerBlock("cirite_iron_ore", () -> new Block(ciriteMaterial));
     public static final RegistryObject<Block> CIRITE_BRICKS = registerBlock("cirite_bricks", () -> new Block(ciriteMaterial));
-    public static final RegistryObject<Block> CIRITE_BRICKS_STAIRS = registerBlock("cirite_bricks_stairs", () -> new StairBlock(() -> CIRITE_BRICKS.get().defaultBlockState(), ciriteMaterial));
-    public static final RegistryObject<Block> CIRITE_BRICKS_SLAB = registerBlock("cirite_bricks_slab", () -> new SlabBlock(ciriteMaterial));
+    public static final RegistryObject<Block> CIRITE_BRICK_STAIRS = registerBlock("cirite_brick_stairs", () -> new StairBlock(() -> CIRITE_BRICKS.get().defaultBlockState(), ciriteMaterial));
+    public static final RegistryObject<Block> CIRITE_BRICK_SLAB = registerBlock("cirite_brick_slab", () -> new SlabBlock(ciriteMaterial));
+    public static final RegistryObject<Block> CIRITE_BRICK_WALL = registerBlock("cirite_brick_wall", () -> new WallBlock(ciriteMaterial));
+    public static final RegistryObject<Block> CIRITE_PILLAR = registerBlock("cirite_pillar", () -> new RotatedPillarBlock(ciriteMaterial));
+    public static final RegistryObject<Block> CHISELED_CIRITE = registerBlock("chiseled_cirite", () -> new Block(ciriteMaterial));
     // Choral
     public static final RegistryObject<Block> CHORAL_BLOCK = registerBlock("choral_block", () -> new Block(BlockBehaviour.Properties.copy(Blocks.BRAIN_CORAL_BLOCK).mapColor(MapColor.TERRACOTTA_WHITE)));
     public static final RegistryObject<Block> CHORAL_FAN = registerBlock("choral_fan", () -> new DirectionalBlock(BlockBehaviour.Properties.copy(Blocks.BRAIN_CORAL_FAN).mapColor(MapColor.TERRACOTTA_WHITE)), BLOCK_CUTOUT);
+    public static final RegistryObject<Block> DORMANT_POLYPPIE = registerBlock("dormant_polyppie", () -> new DormantPolyppieBlock(BlockBehaviour.Properties.copy(Blocks.BRAIN_CORAL_BLOCK).mapColor(MapColor.TERRACOTTA_WHITE)), BLOCK_CUTOUT);
     public static final RegistryObject<Block> SUBWOOFER_BLOCK = registerBlock("subwoofer_block", () -> new SubwooferBlock(BlockBehaviour.Properties.copy(Blocks.NOTE_BLOCK).mapColor(MapColor.TERRACOTTA_WHITE)));
 
+    public static final RegistryObject<Block> EGGS_NIHILO = registerOnlyBlock("eggs_nihilo", () -> new EggsNihiloBlock(BlockBehaviour.Properties.copy(Blocks.CAKE).strength(10, -1).mapColor(MapColor.COLOR_BLACK).randomTicks()), BLOCK_CUTOUT);
 
     private static RegistryObject<Block> log(String name, MapColor color, MapColor color1, BlockBehaviour.Properties properties) {
         return registerBlock(name, () -> new ModRotatedPillarBlock(properties.mapColor((state) -> state.getValue(RotatedPillarBlock.AXIS) == Direction.Axis.Y ? color : color1)));

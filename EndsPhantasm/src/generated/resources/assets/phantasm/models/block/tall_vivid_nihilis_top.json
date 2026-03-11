@@ -2,6 +2,5 @@
   "parent": "minecraft:block/cross",
   "textures": {
     "cross": "phantasm:block/tall_vivid_nihilis_top"
-  },
-  "render_type": "minecraft:cutout"
+  }
 }

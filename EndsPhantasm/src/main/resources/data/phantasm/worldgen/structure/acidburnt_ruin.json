@@ -1,0 +1,23 @@
+{
+  "type": "phantasm:end_ruin",
+  "pieces": [
+    "phantasm:acidburnt_ruin/cube_altar",
+    "phantasm:acidburnt_ruin/enderman_altar",
+    "phantasm:acidburnt_ruin/garden",
+    "phantasm:acidburnt_ruin/greenhouse",
+    "phantasm:acidburnt_ruin/large_house",
+    "phantasm:acidburnt_ruin/medium_house",
+    "phantasm:acidburnt_ruin/medium_pavillion",
+    "phantasm:acidburnt_ruin/observatory",
+    "phantasm:acidburnt_ruin/pillar_altar",
+    "phantasm:acidburnt_ruin/shallow_well",
+    "phantasm:acidburnt_ruin/small_house",
+    "phantasm:acidburnt_ruin/small_pavillion"
+  ],
+  "biomes": "#phantasm:is_acidburnt_abysses",
+  "cluster_probability": 1,
+  "large_probability": 0.8,
+  "spawn_overrides": {},
+  "step": "surface_structures",
+  "terrain_adaption": "beard_thin"
+}

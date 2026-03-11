@@ -20,7 +20,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(value = BushBlock.class, priority = 900)
+@Mixin(BushBlock.class)
 public class PlantBlockMixin {
     @WrapOperation(method = "mayPlaceOn", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/state/BlockState;is(Lnet/minecraft/tags/TagKey;)Z"))
     private boolean customPlantTypes(BlockState instance, TagKey tagKey, Operation<Boolean> original) {

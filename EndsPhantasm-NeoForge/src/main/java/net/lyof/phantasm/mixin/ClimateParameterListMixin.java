@@ -5,7 +5,9 @@ import net.lyof.phantasm.Phantasm;
 import net.lyof.phantasm.world.biome.EndDataCompat;
 import net.lyof.phantasm.world.biome.ModBiomes;
 import net.minecraft.core.Holder;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.biome.Climate;
@@ -21,7 +23,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import java.util.ArrayList;
 import java.util.List;
 
-@Mixin(value = Climate.ParameterList.class, priority = 1100)
+@SuppressWarnings("unchecked")
+@Mixin(value = Climate.ParameterList.class, priority = 9000)
 public abstract class ClimateParameterListMixin<T> {
     @Shadow
     public abstract List<Pair<Climate.ParameterPoint, T>> values();
@@ -62,6 +65,32 @@ public abstract class ClimateParameterListMixin<T> {
                         splitHypercube(highlands, customCount, i),
                         (T) ModBiomes.LOOKUP.getOrThrow(Biomes.END_HIGHLANDS)
                 ));
+            if (Phantasm.isModLoaded("unusualend")) {
+                Climate.ParameterPoint midlands = null;
+                for (Pair<Climate.ParameterPoint, T> e : entries) {
+                    if (e.getSecond() instanceof Holder r && r.is(Biomes.SMALL_END_ISLANDS))
+                        midlands = e.getFirst();
+                    if (midlands != null) {
+                        int j1 = 0;
+                        for (int i = 0; i < 2; i++) {
+                            this.endEntries.add((Pair<Climate.ParameterPoint, T>) new Pair<>(
+                                    splitHypercube(midlands, customCount, j1),
+                                    i == 1 ? ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("unusualend", "warped_reef"))
+                                            : ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("unusualend", "gloopstone_midlands"))
+                            ));
+                            j1 += 2;
+                        }
+                        this.endEntries.addAll(entries.stream()
+                                .filter(p -> p.getSecond() instanceof Holder r && !r.is(Biomes.SMALL_END_ISLANDS)
+                                        && !(r.unwrapKey().get() instanceof Holder k && EndDataCompat.contains(k))).toList());
+                        for (int i = 1; i <= customCount; i += 2)
+                            this.endEntries.add(new Pair<>(
+                                    splitHypercube(midlands, customCount, i),
+                                    (T) ModBiomes.LOOKUP.getOrThrow(Biomes.SMALL_END_ISLANDS)
+                            ));
+                    }
+                }
+            }
             return Climate.RTree.create(this.endEntries);
         }
         return Climate.RTree.create(entries);

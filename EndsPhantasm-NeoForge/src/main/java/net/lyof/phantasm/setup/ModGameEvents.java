@@ -1,6 +1,6 @@
 package net.lyof.phantasm.setup;
 
-import net.lyof.phantasm.Phantasm;
+import  net.lyof.phantasm.Phantasm;
 import net.lyof.phantasm.config.ConfigEntries;
 import net.lyof.phantasm.effect.ModEffects;
 import net.lyof.phantasm.item.ModItems;
@@ -33,7 +33,7 @@ public class ModGameEvents {
     public static void onPlayerChangedDimension(PlayerEvent.PlayerChangedDimensionEvent event) {
         Level entityLevel = event.getEntity().level();
         if (event.getTo() == Level.END && ConfigEntries.outerEndIntegration && entityLevel instanceof ServerLevel level) {
-            BlockPos p = new BlockPos(1280, 60, 0);
+            BlockPos p = new BlockPos(1280, 80, 0);
             BlockPos pos1 = EndGatewayBlockEntityAccessor.getExitPos(level, p).above(2);
             if (level.getBlockState(pos1.below()).isAir()) {
                 level.registryAccess().registryOrThrow(Registries.CONFIGURED_FEATURE)

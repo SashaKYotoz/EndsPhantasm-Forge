@@ -1,11 +1,14 @@
 package net.lyof.phantasm.mixin;
 
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
+import net.lyof.phantasm.Phantasm;
 import net.lyof.phantasm.config.ConfigEntries;
 import net.lyof.phantasm.effect.ModEffects;
 import net.lyof.phantasm.mixin.access.EndGatewayBlockEntityAccessor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.features.EndFeatures;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
@@ -14,16 +17,22 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.portal.PortalInfo;
 import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import java.util.Set;
+
 @Mixin(Entity.class)
-public class EntityMixin {
+public abstract class EntityMixin {
+    @Shadow
+    public abstract Set<String> getTags();
+
     @Inject(method = "findDimensionEntryPoint", at = @At("RETURN"), cancellable = true)
     public void spawnInOuterEnd(ServerLevel destination, CallbackInfoReturnable<PortalInfo> cir) {
-        if (destination.dimension() == Level.END && ConfigEntries.outerEndIntegration) {
+        if (destination.dimension() == Level.END && ConfigEntries.outerEndFirst) {
             PortalInfo result = cir.getReturnValue();
             BlockPos p = new BlockPos(1280, 60, 0);
 
@@ -44,5 +53,11 @@ public class EntityMixin {
     public void charmCursor(double cursorDeltaX, double cursorDeltaY, CallbackInfo ci) {
         if (((Entity) (Object) this) instanceof LivingEntity living && living.hasEffect(ModEffects.CHARM.get()))
             ci.cancel();
+    }
+    @ModifyReturnValue(method = "getTypeName", at = @At("RETURN"))
+    public Component setChallengeName(Component original) {
+        if (this.getTags().contains(Phantasm.MOD_ID + ".challenge"))
+            return Component.translatable("entity.phantasm.challenge", original);
+        return original;
     }
 }

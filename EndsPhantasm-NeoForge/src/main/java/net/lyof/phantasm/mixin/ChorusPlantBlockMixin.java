@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
-@Mixin(value = ChorusPlantBlock.class, priority = 972)
+@Mixin(ChorusPlantBlock.class)
 public class ChorusPlantBlockMixin {
     @WrapOperation(method = "canSurvive", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/state/BlockState;is(Lnet/minecraft/world/level/block/Block;)Z"))
     public boolean canPlaceAtNihilium(BlockState instance, Block block, Operation<Boolean> original) {

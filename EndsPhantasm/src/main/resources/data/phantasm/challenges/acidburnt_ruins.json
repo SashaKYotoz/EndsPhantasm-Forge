@@ -1,0 +1,22 @@
+{
+  "loot_table": "phantasm:chests/shattered_tower",
+  "objective": 12,
+  "level_cost": 2,
+  "post_dragon": false,
+  "monsters": [
+    {
+      "weight": 10,
+      "entity": "minecraft:endermite",
+      "attributes": {
+        "minecraft:generic.max_health": 4
+      }
+    },
+    {
+      "weight": 5,
+      "entity": "phantasm:sour_sludge",
+      "attributes": {
+        "minecraft:generic.armor": 2
+      }
+    }
+  ]
+}

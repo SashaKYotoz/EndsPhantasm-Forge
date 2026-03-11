@@ -1,6 +1,6 @@
 package net.lyof.phantasm.block.custom.signs;
 
-import net.lyof.phantasm.block.custom.entities.ModSignBlockEntity;
+import net.lyof.phantasm.block.entities.ModSignBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.WallSignBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;

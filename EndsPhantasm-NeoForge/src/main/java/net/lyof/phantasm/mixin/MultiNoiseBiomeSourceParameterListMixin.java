@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(MultiNoiseBiomeSourceParameterList.class)
 public class MultiNoiseBiomeSourceParameterListMixin {
-    @Inject(method = "<init>", at = @At("TAIL"))
+    @Inject(method = "<init>", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/biome/MultiNoiseBiomeSourceParameterList$Preset$SourceProvider;apply(Ljava/util/function/Function;)Lnet/minecraft/world/level/biome/Climate$ParameterList;"))
     private void catchLookup(MultiNoiseBiomeSourceParameterList.Preset preset, HolderGetter<Biome> getter, CallbackInfo ci) {
         ModBiomes.register(getter);
     }

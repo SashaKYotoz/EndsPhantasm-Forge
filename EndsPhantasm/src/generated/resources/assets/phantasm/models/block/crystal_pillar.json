@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:block/cube_column",
-  "textures": {
-    "end": "phantasm:block/crystal_pillar_top",
-    "side": "phantasm:block/crystal_pillar"
-  }
-}

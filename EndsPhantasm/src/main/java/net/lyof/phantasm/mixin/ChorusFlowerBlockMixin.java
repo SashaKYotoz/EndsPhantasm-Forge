@@ -19,7 +19,7 @@ public class ChorusFlowerBlockMixin {
         if (ModList.get().isLoaded("endergetic"))
             return original.call(instance, block)
                     || instance.is(ModTags.Blocks.END_PLANTS_GROWABLE_ON)
-                    || instance.is(ForgeRegistries.BLOCKS.getValue(new ResourceLocation("endergetic:poismoss")));
+                    || instance.is(ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse("endergetic:poismoss")));
         return original.call(instance, block) || instance.is(ModTags.Blocks.END_PLANTS_GROWABLE_ON);
     }
 }

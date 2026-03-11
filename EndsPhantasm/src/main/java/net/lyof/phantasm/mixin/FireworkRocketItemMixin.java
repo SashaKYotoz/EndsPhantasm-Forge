@@ -17,7 +17,7 @@ public class FireworkRocketItemMixin {
     @WrapOperation(method = "use", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;isFallFlying()Z"))
     public boolean cancelBoost(Player instance, Operation<Boolean> original) {
         if (instance instanceof ServerPlayer player) {
-            Advancement freeTheEnd = player.getServer().getAdvancements().getAdvancement(new ResourceLocation(ConfigEntries.elytraBoostAdvancement));
+            Advancement freeTheEnd = player.getServer().getAdvancements().getAdvancement(ResourceLocation.parse(ConfigEntries.elytraBoostAdvancement));
             if ((freeTheEnd == null || player.getAdvancements().getOrStartProgress(freeTheEnd).isDone()) && player.isFallFlying()) {
                 instance.swing(instance.getUsedItemHand(), true);
                 return original.call(instance);

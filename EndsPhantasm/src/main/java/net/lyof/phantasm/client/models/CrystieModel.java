@@ -3,7 +3,7 @@ package net.lyof.phantasm.client.models;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.lyof.phantasm.Phantasm;
-import net.lyof.phantasm.entities.custom.CrystieEntity;
+import net.lyof.phantasm.entity.custom.CrystieEntity;
 import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
@@ -12,7 +12,7 @@ import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.ResourceLocation;
 
 public class CrystieModel<T extends CrystieEntity> extends HierarchicalModel<CrystieEntity> {
-    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(Phantasm.MOD_ID, "crystie_model"), "main");
+    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(Phantasm.MOD_ID, "crystie_model"), "main");
     private final ModelPart main;
     private final ModelPart wingsleft;
     private final ModelPart wingsright;

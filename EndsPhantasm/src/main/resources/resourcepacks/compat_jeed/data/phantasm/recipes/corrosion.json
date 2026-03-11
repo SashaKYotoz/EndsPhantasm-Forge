@@ -1,0 +1,17 @@
+{
+  "type": "jeed:effect_provider",
+  "effect":{
+    "id": "phantasm:corrosion"
+  },
+  "providers": [
+    {
+      "item": "phantasm:pomb"
+    },
+    {
+      "item": "phantasm:pomb_slice"
+    },
+    {
+      "item": "phantasm:acidic_mass"
+    }
+  ]
+}

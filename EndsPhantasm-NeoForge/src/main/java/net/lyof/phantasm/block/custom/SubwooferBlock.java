@@ -67,7 +67,7 @@ public class SubwooferBlock extends Block {
                     level.blockEvent(pos, this, dir.get3DDataValue(), i);
                     level.gameEvent(null, GameEvent.NOTE_BLOCK_PLAY, pos);
 
-                    List<Entity> entities = level.getEntities((Entity) null, new AABB(p).inflate(1.2), SubwooferBlock::canPush);
+                    List<Entity> entities = level.getEntities((Entity) null, new AABB(p), SubwooferBlock::canPush);
                     for (Entity e : entities) {
                         if (affected.contains(e.getUUID())) continue;
 

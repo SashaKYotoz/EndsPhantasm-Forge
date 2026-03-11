@@ -84,9 +84,9 @@ public final class TheEndBiomeData {
 		// cache for our own sampler (used for random biome replacement selection)
 		private final Map<Climate.Sampler, ImprovedNoise> samplers = new WeakHashMap<>();
 		// Object lists used for mod compatibility
-		public List<List<Object>> endBiomesCopy = new ArrayList<>();
-		public List<List<Object>> midlandsBiomesCopy = new ArrayList<>();
-		public List<List<Object>> barrensBiomesCopy = new ArrayList<>();
+		public List<List<Object>> endBiomesCopy;
+		public List<List<Object>> midlandsBiomesCopy;
+		public List<List<Object>> barrensBiomesCopy;
 
 		public Overrides(HolderGetter<Biome> biomeRegistry) {
 			this.customBiomes = ADDED_BIOMES.stream().map(biomeRegistry::getOrThrow).collect(Collectors.toSet());

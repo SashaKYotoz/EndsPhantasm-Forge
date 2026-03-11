@@ -48,7 +48,7 @@ public class PillaringPlantBlock extends BushBlock implements BonemealableBlock 
     @Override
     public void performBonemeal(ServerLevel level, RandomSource random, BlockPos pos, BlockState state) {
         if (state.is(ModBlocks.DRALGAE.get()) && random.nextInt(10) == 0)
-            level.setBlock(pos.above(), ModBlocks.POME.get().defaultBlockState(),3);
+            level.setBlock(pos.above(), ModBlocks.POMB.get().defaultBlockState(),3);
         else
             level.setBlock(pos.above(), this.defaultBlockState(),3);
     }

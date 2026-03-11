@@ -7,6 +7,14 @@
       }
     ]
   },
+  "challenge": {
+    "sounds": [
+      {
+        "name": "phantasm:challenge",
+        "stream": true
+      }
+    ]
+  },
   "entity.behemoth_dying": {
     "sounds": [
       "phantasm:entity/behemoth_dying0",

@@ -1,0 +1,12 @@
+{
+  "type": "forge:add_spawns",
+  "biomes": [
+    "phantasm:acidburnt_abysses"
+  ],
+  "spawners": {
+    "type": "phantasm:sour_sludge",
+    "weight": 10,
+    "minCount": 2,
+    "maxCount": 5
+  }
+}

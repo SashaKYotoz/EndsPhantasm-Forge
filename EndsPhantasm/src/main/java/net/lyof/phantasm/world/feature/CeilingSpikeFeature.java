@@ -2,7 +2,7 @@ package net.lyof.phantasm.world.feature;
 
 import com.mojang.serialization.Codec;
 import net.lyof.phantasm.setup.ModTags;
-import net.lyof.phantasm.world.feature.config.BoulderFeatureConfig;
+import net.lyof.phantasm.world.feature.config.SizedBlockFeatureConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
@@ -11,28 +11,25 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-public class CeilingSpikeFeature extends Feature<BoulderFeatureConfig> {
-    public static final Feature<BoulderFeatureConfig> INSTANCE = new CeilingSpikeFeature(BoulderFeatureConfig.CODEC);
+public class CeilingSpikeFeature extends Feature<SizedBlockFeatureConfig> {
+    public static final Feature<SizedBlockFeatureConfig> INSTANCE = new CeilingSpikeFeature(SizedBlockFeatureConfig.CODEC);
 
-    public CeilingSpikeFeature(Codec<BoulderFeatureConfig> configCodec) {
+    public CeilingSpikeFeature(Codec<SizedBlockFeatureConfig> configCodec) {
         super(configCodec);
     }
 
     @Override
-    public boolean place(FeaturePlaceContext<BoulderFeatureConfig> context) {
+    public boolean place(FeaturePlaceContext<SizedBlockFeatureConfig> context) {
         WorldGenLevel world = context.level();
         BlockPos origin = context.origin();
         RandomSource random = context.random();
-        BoulderFeatureConfig config = context.config();
+        SizedBlockFeatureConfig config = context.config();
 
         int size = config.size().sample(random);
 
-        List<BlockPos> toPlace = new ArrayList<>();
         Map<Direction, Integer> sizes = new HashMap<>();
         for (Direction dir : Direction.values())
             sizes.put(dir, size - random.nextIntBetweenInclusive(2, 4));

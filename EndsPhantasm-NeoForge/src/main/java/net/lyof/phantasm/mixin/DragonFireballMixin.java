@@ -20,7 +20,7 @@ public class DragonFireballMixin extends AbstractHurtingProjectile {
 
     @Inject(method = "onHit", at = @At("TAIL"))
     public void explode(HitResult hitResult, CallbackInfo ci) {
-        if (!(hitResult instanceof EntityHitResult entityHitResult) || !this.ownedBy(entityHitResult.getEntity()) && ConfigEntries.explosiveDragonFireballs)
+        if ((!(hitResult instanceof EntityHitResult entityHitResult) || !this.ownedBy(entityHitResult.getEntity())) && ConfigEntries.explosiveDragonFireballs)
             this.level().explode((DragonFireball) (Object) this, this.getX(), this.getY() + 0.5, this.getZ(),
                     3, true, Level.ExplosionInteraction.MOB);
     }

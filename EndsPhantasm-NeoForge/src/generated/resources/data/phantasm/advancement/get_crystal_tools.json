@@ -42,8 +42,7 @@
     "frame": "challenge",
     "hidden": false,
     "icon": {
-      "id": "phantasm:crystalline_pickaxe",
-      "nbt": "{Damage:0}"
+      "id": "phantasm:crystalline_pickaxe"
     },
     "show_toast": true,
     "title": {

@@ -21,12 +21,16 @@ public class ModTabs {
                     .icon(() -> new ItemStack(ModBlocks.FALLEN_STAR.get()))
                     .displayItems((displayContext, entries) -> {
                         entries.accept(ModBlocks.FALLEN_STAR.get());
+
                         entries.accept(ModBlocks.VIVID_NIHILIUM.get());
                         entries.accept(ModBlocks.VIVID_NIHILIS.get());
-                        entries.accept(ModItems.TALL_VIVID_NIHILIS.get());
+                        entries.accept(ModBlocks.TALL_VIVID_NIHILIS.get());
+
+                        entries.accept(ModBlocks.STARFLOWER.get());
 
                         entries.accept(ModBlocks.PREAM_SAPLING.get());
                         entries.accept(ModBlocks.PREAM_LEAVES.get());
+                        entries.accept(ModBlocks.HANGING_PREAM_LEAVES.get());
 
                         entries.accept(ModBlocks.PREAM_LOG.get());
                         entries.accept(ModBlocks.PREAM_WOOD.get());
@@ -46,22 +50,30 @@ public class ModTabs {
                         entries.accept(ModItems.PREAM_SIGN.get());
                         entries.accept(ModItems.PREAM_HANGING_SIGN.get());
 
-                        entries.accept(ModItems.PREAM_BERRY.get());
-                        entries.accept(ModItems.CHORUS_FRUIT_SALAD.get());
+                        if (ModBlocks.PREAM_CABINET != null)
+                            entries.accept(ModBlocks.PREAM_CABINET.get());
 
-                        entries.accept(ModBlocks.OBLIVINE.get());
-                        entries.accept(ModItems.OBLIFRUIT.get());
+                        entries.accept(ModItems.PREAM_BERRY.get());
+
                         entries.accept(ModBlocks.OBLIVION.get());
+                        entries.accept(ModBlocks.OBLIVINE.get());
                         entries.accept(ModBlocks.CRYSTALILY.get());
 
+                        entries.accept(ModItems.OBLIFRUIT.get());
+
+                        entries.accept(ModItems.CHORUS_FRUIT_SALAD.get());
+
                         entries.accept(ModBlocks.PURPUR_LAMP.get());
-                        entries.accept(ModBlocks.STARFLOWER.get());
+                        entries.accept(ModBlocks.PURPUR_WALL.get());
+
                         entries.accept(ModBlocks.RAW_PURPUR.get());
+                        entries.accept(ModBlocks.RAW_PURPUR_COAL_ORE.get());
                         entries.accept(ModBlocks.RAW_PURPUR_BRICKS.get());
                         entries.accept(ModBlocks.RAW_PURPUR_PILLAR.get());
                         entries.accept(ModBlocks.RAW_PURPUR_TILES.get());
-                        entries.accept(ModBlocks.RAW_PURPUR_BRICKS_STAIRS.get());
-                        entries.accept(ModBlocks.RAW_PURPUR_BRICKS_SLAB.get());
+                        entries.accept(ModBlocks.RAW_PURPUR_BRICK_STAIRS.get());
+                        entries.accept(ModBlocks.RAW_PURPUR_BRICK_SLAB.get());
+                        entries.accept(ModBlocks.RAW_PURPUR_BRICK_WALL.get());
 
                         entries.accept(ModBlocks.CRYSTAL_SHARD.get());
                         entries.accept(ModBlocks.VOID_CRYSTAL_SHARD.get());
@@ -74,56 +86,79 @@ public class ModTabs {
                         entries.accept(ModItems.CRYSTALLINE_PICKAXE.get());
                         entries.accept(ModItems.CRYSTALLINE_AXE.get());
                         entries.accept(ModItems.CRYSTALLINE_HOE.get());
-
+                        if (ModItems.CRYSTALLINE_KNIFE != null)
+                            entries.accept(ModItems.CRYSTALLINE_KNIFE.get());
 
                         entries.accept(ModBlocks.CRYSTAL_TILES.get());
                         entries.accept(ModBlocks.CRYSTAL_PILLAR.get());
-                        entries.accept(ModBlocks.CRYSTAL_TILES_STAIRS.get());
-                        entries.accept(ModBlocks.CRYSTAL_TILES_SLAB.get());
+                        entries.accept(ModBlocks.CRYSTAL_TILE_STAIRS.get());
+                        entries.accept(ModBlocks.CRYSTAL_TILE_SLAB.get());
 
                         entries.accept(ModBlocks.VOID_CRYSTAL_TILES.get());
                         entries.accept(ModBlocks.VOID_CRYSTAL_PILLAR.get());
-                        entries.accept(ModBlocks.VOID_CRYSTAL_TILES_STAIRS.get());
-                        entries.accept(ModBlocks.VOID_CRYSTAL_TILES_SLAB.get());
+                        entries.accept(ModBlocks.VOID_CRYSTAL_TILE_STAIRS.get());
+                        entries.accept(ModBlocks.VOID_CRYSTAL_TILE_SLAB.get());
 
                         entries.accept(ModBlocks.CRYSTAL_GLASS.get());
                         entries.accept(ModBlocks.CRYSTAL_GLASS_PANE.get());
                         entries.accept(ModBlocks.VOID_CRYSTAL_GLASS.get());
                         entries.accept(ModBlocks.VOID_CRYSTAL_GLASS_PANE.get());
 
-                        entries.accept(ModBlocks.POLISHED_OBSIDIAN.get());
-                        entries.accept(ModBlocks.POLISHED_OBSIDIAN_BRICKS.get());
-                        entries.accept(ModBlocks.POLISHED_OBSIDIAN_BRICKS_STAIRS.get());
-                        entries.accept(ModBlocks.POLISHED_OBSIDIAN_BRICKS_SLAB.get());
+                        entries.accept(ModBlocks.DELAYER.get());
+                        entries.accept(ModBlocks.SPLITTER.get());
+
                         entries.accept(ModItems.BEHEMOTH_MEAT.get());
                         entries.accept(ModItems.BEHEMOTH_STEAK.get());
-                        entries.accept(ModItems.SHATTERED_PENDANT.get());
-                        entries.accept(ModItems.CRYSTIE_SPAWN_EGG.get());
-                        entries.accept(ModItems.BEHEMOTH_SPAWN_EGG.get());
+
+
                         entries.accept(ModBlocks.ACIDIC_NIHILIUM.get());
                         entries.accept(ModBlocks.ACIDIC_NIHILIS.get());
-                        entries.accept(ModItems.TALL_ACIDIC_NIHILIS.get());
+                        entries.accept(ModBlocks.TALL_ACIDIC_NIHILIS.get());
                         entries.accept(ModBlocks.DRAGON_MINT.get());
 
                         entries.accept(ModBlocks.DRALGAE.get());
-                        entries.accept(ModBlocks.POME.get());
-                        entries.accept(ModItems.POME_SLICE.get());
+                        entries.accept(ModBlocks.POMB.get());
+                        entries.accept(ModItems.POMB_SLICE.get());
+                        entries.accept(ModItems.POP_ROCK_CANDY.get());
 
                         entries.accept(ModBlocks.ACIDIC_MASS.get());
 
                         entries.accept(ModBlocks.CIRITE.get());
                         entries.accept(ModBlocks.CIRITE_IRON_ORE.get());
                         entries.accept(ModBlocks.CIRITE_BRICKS.get());
-                        entries.accept(ModBlocks.CIRITE_BRICKS_STAIRS.get());
-                        entries.accept(ModBlocks.CIRITE_BRICKS_SLAB.get());
+                        entries.accept(ModBlocks.CIRITE_PILLAR.get());
+                        entries.accept(ModBlocks.CIRITE_BRICK_STAIRS.get());
+                        entries.accept(ModBlocks.CIRITE_BRICK_SLAB.get());
+                        entries.accept(ModBlocks.CIRITE_BRICK_WALL.get());
+                        entries.accept(ModBlocks.CHISELED_CIRITE.get());
 
                         entries.accept(ModBlocks.CHORAL_BLOCK.get());
                         entries.accept(ModBlocks.CHORAL_FAN.get());
+                        entries.accept(ModBlocks.DORMANT_POLYPPIE.get());
                         entries.accept(ModBlocks.SUBWOOFER_BLOCK.get());
 
                         entries.accept(ModItems.CHORAL_ARROW.get());
 
                         entries.accept(ModItems.MUSIC_DISC_ABRUPTION.get());
+
+
+                        entries.accept(ModBlocks.POLISHED_OBSIDIAN.get());
+                        entries.accept(ModBlocks.POLISHED_OBSIDIAN_BRICKS.get());
+                        entries.accept(ModBlocks.POLISHED_OBSIDIAN_PILLAR.get());
+                        entries.accept(ModBlocks.POLISHED_OBSIDIAN_BRICK_STAIRS.get());
+                        entries.accept(ModBlocks.POLISHED_OBSIDIAN_BRICK_SLAB.get());
+                        entries.accept(ModBlocks.CHISELED_OBSIDIAN.get());
+
+                        entries.accept(ModBlocks.CHALLENGE_RUNE.get());
+                        entries.accept(ModItems.SHATTERED_PENDANT.get());
+
+                        entries.accept(ModItems.EGGS_NIHILO.get());
+
+
+                        entries.accept(ModItems.CRYSTIE_SPAWN_EGG.get());
+                        entries.accept(ModItems.BEHEMOTH_SPAWN_EGG.get());
+                        entries.accept(ModItems.POLYPPIE_SPAWN_EGG.get());
+                        entries.accept(ModItems.SOUR_SLUDGE_SPAWN_EGG.get());
                     }).build());
 
     @SubscribeEvent

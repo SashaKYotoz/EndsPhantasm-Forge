@@ -8,6 +8,7 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.gameevent.GameEvent;
 
 public class ModTags {
     public static class Items {
@@ -21,15 +22,17 @@ public class ModTags {
     }
 
     public static class Blocks {
-        public static final TagKey<Block> PREAM_BLOCKS = tag("pream_blocks");
-        public static final TagKey<Block> HANGING_PREAM_LEAVES_GROWABLE_ON = tag("hanging_pream_leaves_growable_on");
-        public static final TagKey<Block> END_PLANTS = tag("end_plants");
-        public static final TagKey<Block> END_PLANTS_GROWABLE_ON = tag("end_plants_growable_on");
+        public static final TagKey<Block> PREAM_LOGS = create("pream_logs");
+        public static final TagKey<Block> END_CRYSTAL_PLACEABLE_ON = create("end_crystal_placeable_on");
+        public static final TagKey<Block> HANGING_PREAM_LEAVES_GROWABLE_ON = create("hanging_pream_leaves_growable_on");
 
-        public static final TagKey<Block> OBLIVINE_GROWABLE_ON = tag("oblivine_growable_on");
-        public static final TagKey<Block> DRALGAE_GROWABLE_ON = tag("dralgae_growable_on");
+        public static final TagKey<Block> END_PLANTS = create("end_plants");
+        public static final TagKey<Block> END_PLANTS_GROWABLE_ON = create("end_plants_growable_on");
 
-        private static TagKey<Block> tag(String name) {
+        public static final TagKey<Block> OBLIVINE_GROWABLE_ON = create("oblivine_growable_on");
+        public static final TagKey<Block> DRALGAE_GROWABLE_ON = create("dralgae_growable_on");
+
+        private static TagKey<Block> create(String name) {
             return BlockTags.create(Phantasm.makeID( name));
         }
     }
@@ -40,6 +43,14 @@ public class ModTags {
 
         private static TagKey<Biome> create(String s) {
             return TagKey.create(Registries.BIOME, Phantasm.makeID(s));
+        }
+    }
+    public static class GameEvents {
+        public static final TagKey<GameEvent> BEHEMOTH_CAN_LISTEN = create("behemoth_can_listen");
+        public static final TagKey<GameEvent> DORMANT_POLYPPIE_CAN_LISTEN = create("dormant_polyppie_can_listen");
+
+        private static TagKey<GameEvent> create(String name) {
+            return TagKey.create(Registries.GAME_EVENT, Phantasm.makeID(name));
         }
     }
 }

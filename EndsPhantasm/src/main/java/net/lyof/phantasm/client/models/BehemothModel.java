@@ -3,8 +3,8 @@ package net.lyof.phantasm.client.models;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.lyof.phantasm.Phantasm;
-import net.lyof.phantasm.entities.animations.BehemothAnimation;
-import net.lyof.phantasm.entities.custom.BehemothEntity;
+import net.lyof.phantasm.entity.animations.BehemothAnimation;
+import net.lyof.phantasm.entity.custom.BehemothEntity;
 import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
@@ -14,7 +14,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
 public class BehemothModel<T extends BehemothEntity> extends HierarchicalModel<T> {
-	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(Phantasm.MOD_ID, "behemoth_model"), "main");
+	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(Phantasm.MOD_ID, "behemoth_model"), "main");
 	public static final float rad = (float) Math.PI / 180f;
 
 	private final ModelPart body;

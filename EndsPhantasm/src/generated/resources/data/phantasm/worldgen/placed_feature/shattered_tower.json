@@ -1,0 +1,9 @@
+{
+  "feature": "phantasm:shattered_tower",
+  "placement": [
+    {
+      "type": "minecraft:heightmap",
+      "heightmap": "MOTION_BLOCKING"
+    }
+  ]
+}

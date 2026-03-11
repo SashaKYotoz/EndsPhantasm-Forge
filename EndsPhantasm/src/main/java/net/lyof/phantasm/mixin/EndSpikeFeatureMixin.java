@@ -23,7 +23,7 @@ public abstract class EndSpikeFeatureMixin {
             if (blockpos.distToLowCornerSqr(endSpike.getCenterX(), blockpos.getY(), endSpike.getCenterZ()) <= (double)(i * i + 1) && blockpos.getY() < endSpike.getHeight()) {
                 double crying = (blockpos.getY() - 60) / (endSpike.getHeight() - 60d);
                 BlockState state = accessor.getBlockState(blockpos);
-                if (state.is(Blocks.OBSIDIAN) && ConfigEntries.improveEndSpires) {
+                if (state.is(Blocks.OBSIDIAN) && ConfigEntries.prettyTowers) {
                     if (crying > 0 && Math.random() < crying * crying)
                         state = Blocks.CRYING_OBSIDIAN.defaultBlockState();
                     else if (Math.random() < 0.2)
