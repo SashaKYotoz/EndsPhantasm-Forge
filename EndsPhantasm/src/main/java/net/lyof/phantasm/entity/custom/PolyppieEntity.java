@@ -161,7 +161,7 @@ public class PolyppieEntity extends TamableAnimal implements VariantHolder<Polyp
 
     @Override
     public double getPassengersRidingOffset() {
-        return this.getMyRidingOffset() * 0.7;
+        return this.getBbHeight() * 0.6;
     }
 
     @Override

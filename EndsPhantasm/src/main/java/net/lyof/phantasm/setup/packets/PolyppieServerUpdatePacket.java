@@ -1,6 +1,5 @@
 package net.lyof.phantasm.setup.packets;
 
-import net.lyof.phantasm.Phantasm;
 import net.lyof.phantasm.entity.access.PolyppieCarrier;
 import net.lyof.phantasm.entity.custom.PolyppieEntity;
 import net.lyof.phantasm.sound.SongHandler;
@@ -12,6 +11,8 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.RecordItem;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
@@ -36,43 +37,38 @@ public class PolyppieServerUpdatePacket {
 
     public boolean handle(Supplier<NetworkEvent.Context> supplier) {
         NetworkEvent.Context context = supplier.get();
-        context.enqueueWork(() -> {
+        context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> ClientPacketHandler.handle(id, soundKey, nbt)));
+        context.setPacketHandled(true);
+        return true;
+    }
+
+    static class ClientPacketHandler {
+        public static void handle(int id, int soundKey, CompoundTag nbt) {
             Minecraft client = Minecraft.getInstance();
             Entity self = client.level.getEntity(id);
-            ItemStack stack = ItemStack.EMPTY;
-            if (!nbt.isEmpty()) stack = ItemStack.of(nbt);
+            ItemStack stack = nbt.isEmpty() ? ItemStack.EMPTY : ItemStack.of(nbt);
 
-            PolyppieEntity polyppie = null;
-            if (self instanceof PolyppieCarrier carrier && carrier.getCarriedPolyppie() != null)
-                polyppie = carrier.getCarriedPolyppie();
-            else if (self instanceof PolyppieEntity)
-                polyppie = (PolyppieEntity) self;
+            PolyppieEntity polyppie = (self instanceof PolyppieCarrier carrier && carrier.getCarriedPolyppie() != null)
+                    ? carrier.getCarriedPolyppie() : (self instanceof PolyppieEntity ? (PolyppieEntity) self : null);
 
             PolyppieSoundInstance soundInstance = SongHandler.instance.get(soundKey);
             if (soundInstance != null) {
                 SongHandler.instance.remove(soundKey);
                 client.getSoundManager().stop(soundInstance);
             }
-            Phantasm.log(stack.toString(),1);
 
             if (polyppie != null) {
                 polyppie.setSoundKey(soundKey);
                 if (stack.isEmpty()) polyppie.stopPlaying();
                 else polyppie.startPlaying();
-                if (polyppie.isDeadOrDying()) return;
-//if (Phantasm.isVinURLLoaded() && VinURLCompat.isVinURLDisc(stack)) {
-//                    VinURLCompat.playSound(polyppie, soundKey, stack, client);
-//                } else
-                if (stack.getItem() instanceof RecordItem musicDisc) {
-                    client.gui.setNowPlaying(musicDisc.getDescription());
 
+                if (!polyppie.isDeadOrDying() && stack.getItem() instanceof RecordItem musicDisc) {
+                    client.gui.setNowPlaying(musicDisc.getDescription());
                     soundInstance = new PolyppieDiscSoundInstance(musicDisc.getSound(), 1, polyppie, 0);
                     SongHandler.instance.add(soundKey, soundInstance);
                     client.getSoundManager().play(soundInstance);
                 }
             }
-        });
-        return true;
-
+        }
     }
 }

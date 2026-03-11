@@ -5,6 +5,8 @@ import net.lyof.phantasm.util.MixinAccess;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.WinScreen;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
@@ -18,7 +20,13 @@ public class BeginCutsceneStartsPacket {
 
     public boolean handle(Supplier<NetworkEvent.Context> supplier) {
         NetworkEvent.Context context = supplier.get();
-        context.enqueueWork(() -> {
+        context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> ClientPacketHandler::handleBeginCutscene));
+
+        context.setPacketHandled(true);
+        return true;
+    }
+    static class ClientPacketHandler {
+        public static void handleBeginCutscene() {
             Minecraft minecraft = Minecraft.getInstance();
             if (minecraft.level == null) return;
             if (minecraft.screen instanceof WinScreen) return;
@@ -30,8 +38,6 @@ public class BeginCutsceneStartsPacket {
 
             ((MixinAccess<Boolean>) creditsScreen).setMixinValue(true);
             minecraft.setScreen(creditsScreen);
-        });
-        context.setPacketHandled(true);
-        return true;
+        }
     }
 }

@@ -7,6 +7,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
@@ -27,7 +29,13 @@ public class ChallengeEndsPacket {
 
     public boolean handle(Supplier<NetworkEvent.Context> supplier) {
         NetworkEvent.Context context = supplier.get();
-        context.enqueueWork(() -> {
+        context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> ClientPacketHandler.handle(pos, success)));
+        context.setPacketHandled(true);
+        return true;
+    }
+
+    static class ClientPacketHandler {
+        public static void handle(BlockPos pos, boolean success) {
             Minecraft client = Minecraft.getInstance();
             ChallengeRuneBlockEntity rune = ((Challenger) client.player).getChallengeRune();
 
@@ -40,10 +48,7 @@ public class ChallengeEndsPacket {
 
                 rune.stopChallenge(success);
             }
-
             client.levelRenderer.playStreamingMusic(null, pos);
-        });
-        context.setPacketHandled(true);
-        return true;
+        }
     }
 }
