@@ -17,8 +17,8 @@ plugins {
 
 apply plugin: 'org.spongepowered.mixin'
 
-group = mod_version
-version = mod_group_id
+group = mod_group_id
+version = mod_version
 
 base {
     archivesName = mod_id
@@ -100,6 +100,7 @@ dependencies {
 //    runtimeOnly fg.deobf("curse.maven:endless-biomes-667688:5679839")
 
     compileOnly fg.deobf("curse.maven:inventory-profiles-next-495267:7565992")
+    runtimeOnly fg.deobf("curse.maven:farmers-delight-398521:7596353")
     compileOnly fg.deobf("curse.maven:farmers-delight-398521:7596353")
 
     compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:0.5.0"))

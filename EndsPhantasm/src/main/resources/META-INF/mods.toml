@@ -4,7 +4,7 @@ license="GPL-3.0"
 
 [[mods]]
 modId="phantasm"
-version="1.1"
+version="1.1.1"
 displayName="End's Phantasm"
 credits="Ported to Forge with love by SashaKYotoz:)"
 logoFile= "icon.png"

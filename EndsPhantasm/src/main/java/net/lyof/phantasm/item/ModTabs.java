@@ -50,7 +50,7 @@ public class ModTabs {
                         entries.accept(ModItems.PREAM_SIGN.get());
                         entries.accept(ModItems.PREAM_HANGING_SIGN.get());
 
-                        if (ModBlocks.PREAM_CABINET != null)
+                        if (Phantasm.isFarmersDelightLoaded() && ModBlocks.PREAM_CABINET != null && ModBlocks.PREAM_CABINET.isPresent())
                             entries.accept(ModBlocks.PREAM_CABINET.get());
 
                         entries.accept(ModItems.PREAM_BERRY.get());
@@ -86,7 +86,7 @@ public class ModTabs {
                         entries.accept(ModItems.CRYSTALLINE_PICKAXE.get());
                         entries.accept(ModItems.CRYSTALLINE_AXE.get());
                         entries.accept(ModItems.CRYSTALLINE_HOE.get());
-                        if (ModItems.CRYSTALLINE_KNIFE != null)
+                        if (Phantasm.isFarmersDelightLoaded() && ModItems.CRYSTALLINE_KNIFE != null && ModItems.CRYSTALLINE_KNIFE.isPresent())
                             entries.accept(ModItems.CRYSTALLINE_KNIFE.get());
 
                         entries.accept(ModBlocks.CRYSTAL_TILES.get());

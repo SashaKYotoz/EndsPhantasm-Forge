@@ -18,14 +18,21 @@ import net.lyof.phantasm.world.biome.EndDataCompat;
 import net.lyof.phantasm.world.feature.tree.ModFoliageTypes;
 import net.lyof.phantasm.world.feature.tree.ModTrunkTypes;
 import net.lyof.phantasm.world.structure.ModStructures;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.PackType;
+import net.minecraft.server.packs.PathPackResources;
+import net.minecraft.server.packs.repository.Pack;
+import net.minecraft.server.packs.repository.PackSource;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
+import net.minecraftforge.event.AddPackFindersEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
@@ -36,6 +43,8 @@ import net.minecraftforge.fml.loading.FMLLoader;
 import net.minecraftforge.registries.RegistryObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.nio.file.Path;
 
 @SuppressWarnings("removal")
 @Mod(Phantasm.MOD_ID)
@@ -50,14 +59,15 @@ public class Phantasm {
         ModConfig.register();
         ConfiguredData.register();
 
-        if (Phantasm.isFarmersDelightLoaded())
-            FarmersDelightCompat.setup();
-
         ModBlocks.BLOCKS.register(modEventBus);
         ModItems.ITEMS.register(modEventBus);
         ModBlockEntities.BLOCK_ENTITIES.register(modEventBus);
         ModTrunkTypes.TRUNK_TYPE_REGISTRY.register(modEventBus);
         ModFoliageTypes.FOLIAGE_PLACER_REGISTRY.register(modEventBus);
+
+        if (Phantasm.isFarmersDelightLoaded())
+            FarmersDelightCompat.setup();
+
         ModTabs.CREATIVE_TAB.register(modEventBus);
         ModParticles.PARTICLE_TYPES.register(modEventBus);
         ModFeatures.register(modEventBus);
@@ -69,6 +79,7 @@ public class Phantasm {
         modEventBus.addListener(ModPackets::registerPackets);
         modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(this::clientSetup);
+        modEventBus.addListener(this::registerPacks);
     }
 
     public static ResourceLocation makeID(String id) {
@@ -82,10 +93,57 @@ public class Phantasm {
     }
 
     private void clientSetup(FMLClientSetupEvent event) {
+        ConfiguredData.registerClient();
+
         for (RegistryObject<Block> block : ModBlocks.BLOCK_CUTOUT)
             ItemBlockRenderTypes.setRenderLayer(block.get(), RenderType.cutout());
         for (RegistryObject<Block> block : ModBlocks.BLOCK_TRANSLUCENT)
             ItemBlockRenderTypes.setRenderLayer(block.get(), RenderType.translucent());
+    }
+
+    private void registerPacks(AddPackFindersEvent event) {
+        if (event.getPackType() == PackType.CLIENT_RESOURCES) {
+            if (isFarmersDelightLoaded()) {
+                Path path = ModList.get().getModFileById("phantasm").getFile().findResource("resourcepacks/compat_farmersdelight");
+                Pack builtinDataPack = Pack.readMetaAndCreate(
+                        "phantasm:fd_compat",
+                        Component.literal("Phantasm FD compat"),
+                        false,
+                        (a) -> new PathPackResources(a, path, true),
+                        PackType.CLIENT_RESOURCES,
+                        Pack.Position.TOP,
+                        PackSource.create((arg) -> Component.translatable("pack.nameAndSource", arg,
+                                Component.translatable("pack.source.builtin")).withStyle(ChatFormatting.GRAY), false)
+                );
+                event.addRepositorySource((packConsumer) -> packConsumer.accept(builtinDataPack));
+            }
+            if (ModList.get().isLoaded("jeed")) {
+                Path path = ModList.get().getModFileById("phantasm").getFile().findResource("resourcepacks/compat_jeed");
+                Pack builtinDataPack = Pack.readMetaAndCreate(
+                        "phantasm:jeed_compat",
+                        Component.literal("Phantasm JEED compat"),
+                        false,
+                        (a) -> new PathPackResources(a, path, true),
+                        PackType.CLIENT_RESOURCES,
+                        Pack.Position.TOP,
+                        PackSource.create((arg) -> Component.translatable("pack.nameAndSource", arg,
+                                Component.translatable("pack.source.builtin")).withStyle(ChatFormatting.GRAY), false)
+                );
+                event.addRepositorySource((packConsumer) -> packConsumer.accept(builtinDataPack));
+            }
+            Path path = ModList.get().getModFileById("phantasm").getFile().findResource("resourcepacks/phantasm_connected_glass");
+            Pack builtinDataPack = Pack.readMetaAndCreate(
+                    "phantasm:phantasm_connected_glass",
+                    Component.literal("Phantasm Connected Glass"),
+                    false,
+                    (a) -> new PathPackResources(a, path, true),
+                    PackType.CLIENT_RESOURCES,
+                    Pack.Position.TOP,
+                    PackSource.create((arg) -> Component.translatable("pack.nameAndSource", arg,
+                            Component.translatable("pack.source.builtin")).withStyle(ChatFormatting.GRAY), false)
+            );
+            event.addRepositorySource((packConsumer) -> packConsumer.accept(builtinDataPack));
+        }
     }
 
     public static boolean isFarmersDelightLoaded() {
