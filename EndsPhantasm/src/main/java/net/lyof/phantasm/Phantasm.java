@@ -18,7 +18,6 @@ import net.lyof.phantasm.world.biome.EndDataCompat;
 import net.lyof.phantasm.world.feature.tree.ModFoliageTypes;
 import net.lyof.phantasm.world.feature.tree.ModTrunkTypes;
 import net.lyof.phantasm.world.structure.ModStructures;
-import net.minecraft.ChatFormatting;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
@@ -40,10 +39,13 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLLoader;
+import net.minecraftforge.forgespi.locating.IModFile;
 import net.minecraftforge.registries.RegistryObject;
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.nio.file.Files;
 import java.nio.file.Path;
 
 @SuppressWarnings("removal")
@@ -102,47 +104,35 @@ public class Phantasm {
     }
 
     private void registerPacks(AddPackFindersEvent event) {
-        if (event.getPackType() == PackType.CLIENT_RESOURCES) {
-            if (isFarmersDelightLoaded()) {
-                Path path = ModList.get().getModFileById("phantasm").getFile().findResource("resourcepacks/compat_farmersdelight");
-                Pack builtinDataPack = Pack.readMetaAndCreate(
-                        "phantasm:fd_compat",
-                        Component.literal("Phantasm FD compat"),
+        if (event.getPackType() == PackType.SERVER_DATA) {
+            registerBuiltinPack(event, "compat_jeed", "Phantasm JEED compat", "jeed");
+            registerBuiltinPack(event, "compat_farmersdelight", "Phantasm FD Data compat", "farmersdelight");
+        } else if (event.getPackType() == PackType.CLIENT_RESOURCES) {
+            registerBuiltinPack(event, "compat_farmersdelight", "Phantasm FD compat", "farmersdelight");
+            registerBuiltinPack(event, "phantasm_connected_glass", "Phantasm Connected Glass", null);
+        }
+    }
+    private void registerBuiltinPack(AddPackFindersEvent event, String folderName, String displayName, @Nullable String modDependency) {
+        if (modDependency != null && !ModList.get().isLoaded(modDependency)) return;
+
+        IModFile modFile = ModList.get().getModFileById("phantasm").getFile();
+        Path resourcePath = modFile.findResource("resourcepacks/" + folderName);
+
+        if (Files.exists(resourcePath)) {
+            event.addRepositorySource((packConsumer) -> {
+                Pack pack = Pack.readMetaAndCreate(
+                        "phantasm:" + folderName,
+                        Component.literal(displayName),
                         false,
-                        (a) -> new PathPackResources(a, path, true),
-                        PackType.CLIENT_RESOURCES,
+                        (id) -> new PathPackResources(id, resourcePath, true),
+                        event.getPackType(),
                         Pack.Position.TOP,
-                        PackSource.create((arg) -> Component.translatable("pack.nameAndSource", arg,
-                                Component.translatable("pack.source.builtin")).withStyle(ChatFormatting.GRAY), false)
+                        PackSource.BUILT_IN
                 );
-                event.addRepositorySource((packConsumer) -> packConsumer.accept(builtinDataPack));
-            }
-            if (ModList.get().isLoaded("jeed")) {
-                Path path = ModList.get().getModFileById("phantasm").getFile().findResource("resourcepacks/compat_jeed");
-                Pack builtinDataPack = Pack.readMetaAndCreate(
-                        "phantasm:jeed_compat",
-                        Component.literal("Phantasm JEED compat"),
-                        false,
-                        (a) -> new PathPackResources(a, path, true),
-                        PackType.CLIENT_RESOURCES,
-                        Pack.Position.TOP,
-                        PackSource.create((arg) -> Component.translatable("pack.nameAndSource", arg,
-                                Component.translatable("pack.source.builtin")).withStyle(ChatFormatting.GRAY), false)
-                );
-                event.addRepositorySource((packConsumer) -> packConsumer.accept(builtinDataPack));
-            }
-            Path path = ModList.get().getModFileById("phantasm").getFile().findResource("resourcepacks/phantasm_connected_glass");
-            Pack builtinDataPack = Pack.readMetaAndCreate(
-                    "phantasm:phantasm_connected_glass",
-                    Component.literal("Phantasm Connected Glass"),
-                    false,
-                    (a) -> new PathPackResources(a, path, true),
-                    PackType.CLIENT_RESOURCES,
-                    Pack.Position.TOP,
-                    PackSource.create((arg) -> Component.translatable("pack.nameAndSource", arg,
-                            Component.translatable("pack.source.builtin")).withStyle(ChatFormatting.GRAY), false)
-            );
-            event.addRepositorySource((packConsumer) -> packConsumer.accept(builtinDataPack));
+                if (pack != null) {
+                    packConsumer.accept(pack);
+                }
+            });
         }
     }
 

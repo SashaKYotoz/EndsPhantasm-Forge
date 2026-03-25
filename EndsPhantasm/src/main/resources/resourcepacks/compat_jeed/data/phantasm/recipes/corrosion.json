@@ -13,5 +13,11 @@
     {
       "item": "phantasm:acidic_mass"
     }
+  ],
+  "conditions": [
+    {
+      "modid": "jeed",
+      "type": "forge:mod_loaded"
+    }
   ]
 }

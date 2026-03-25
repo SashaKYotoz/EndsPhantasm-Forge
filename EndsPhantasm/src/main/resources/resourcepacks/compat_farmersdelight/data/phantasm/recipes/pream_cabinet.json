@@ -18,5 +18,11 @@
   "result": {
     "item": "phantasm:pream_cabinet"
   },
-  "show_notification": true
+  "show_notification": true,
+  "conditions": [
+    {
+      "modid": "farmersdelight",
+      "type": "forge:mod_loaded"
+    }
+  ]
 }

@@ -7,5 +7,11 @@
     {
       "item": "phantasm:choral_arrow"
     }
+  ],
+  "conditions": [
+    {
+      "modid": "jeed",
+      "type": "forge:mod_loaded"
+    }
   ]
 }
