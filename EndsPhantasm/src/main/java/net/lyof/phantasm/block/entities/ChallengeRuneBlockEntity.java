@@ -110,6 +110,10 @@ public class ChallengeRuneBlockEntity extends BlockEntity {
         return nbt;
     }
 
+    @Override
+    public AABB getRenderBoundingBox() {
+        return INFINITE_EXTENT_AABB;
+    }
 
     public void setChallenge(ResourceLocation id) {
         this.challenge = ChallengeRegistry.get(id);
