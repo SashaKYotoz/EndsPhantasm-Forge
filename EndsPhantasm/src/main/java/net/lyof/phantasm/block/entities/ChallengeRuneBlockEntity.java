@@ -32,7 +32,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
@@ -235,11 +234,13 @@ public class ChallengeRuneBlockEntity extends BlockEntity {
             }
         }
 
-        for (Entity entity : level.getEntitiesOfClass(Entity.class, AABB.of(new BoundingBox(this.getBlockPos().above((int) Challenge.R / 2))).inflate(Challenge.R * 2),
-                e -> e instanceof Challenger challenger && challenger.getChallengeRune() == this)) {
+        if (level != null){
+            for (Entity entity : level.getEntitiesOfClass(Entity.class, AABB.unitCubeFromLowerCorner(this.getBlockPos().above((int) Challenge.R / 2).getCenter()).inflate(Challenge.R * 2),
+                    e -> e instanceof Challenger challenger && challenger.getChallengeRune() == this)) {
 
-            if (!(entity instanceof Player)) {
-                entity.remove(Entity.RemovalReason.CHANGED_DIMENSION);
+                if (!(entity instanceof Player)) {
+                    entity.remove(Entity.RemovalReason.CHANGED_DIMENSION);
+                }
             }
         }
 
@@ -285,7 +286,7 @@ public class ChallengeRuneBlockEntity extends BlockEntity {
         }
 
         if (self.tick == 100) {
-            level.getEntitiesOfClass(Entity.class, AABB.of(new BoundingBox(pos)), e -> e instanceof EndCrystal)
+            level.getEntitiesOfClass(Entity.class, AABB.unitCubeFromLowerCorner(pos.getCenter()), e -> e instanceof EndCrystal)
                     .stream().findFirst().ifPresent(Entity::discard);
             if (level.isClientSide()) level.explode(null, pos.getX() + 0.5, pos.getY() + 1.5, pos.getZ() + 0.5,
                     2, Level.ExplosionInteraction.NONE);

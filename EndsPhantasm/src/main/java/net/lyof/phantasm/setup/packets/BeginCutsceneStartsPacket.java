@@ -16,7 +16,9 @@ public class BeginCutsceneStartsPacket {
 
     public BeginCutsceneStartsPacket(FriendlyByteBuf buffer) {}
 
-    public void toBytes(FriendlyByteBuf buffer) {}
+    public void toBytes(FriendlyByteBuf buffer) {
+        buffer.writeBytes(new byte[]{0x0});
+    }
 
     public boolean handle(Supplier<NetworkEvent.Context> supplier) {
         NetworkEvent.Context context = supplier.get();

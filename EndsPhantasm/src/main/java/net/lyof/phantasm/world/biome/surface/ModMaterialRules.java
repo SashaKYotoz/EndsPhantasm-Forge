@@ -17,7 +17,7 @@ import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber
 public class ModMaterialRules {
-    public static SurfaceRules.RuleSource createDreamingDenRule() {
+    public static SurfaceRules.RuleSource createBiomesRule() {
         double min_noise = -0.4;
 
         SurfaceRules.ConditionSource is_dreaming_den = SurfaceRules.isBiome(ModBiomes.DREAMING_DEN);
@@ -182,7 +182,7 @@ public class ModMaterialRules {
                     NoiseGeneratorSettings settings = generator.generatorSettings().get();
                     ((NoiseGeneratorSettingsAccess) (Object) settings).addSurfaceRule(
                             SurfaceRules.sequence(
-                                    ModMaterialRules.createDreamingDenRule(), generator.generatorSettings().get().surfaceRule()
+                                    ModMaterialRules.createBiomesRule(), generator.generatorSettings().get().surfaceRule()
                             )
                     );
                 }

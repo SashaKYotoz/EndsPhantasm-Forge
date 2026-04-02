@@ -38,6 +38,7 @@
     "access.NoiseGeneratorSettingsAccess"
   ],
   "client": [
+    "CreativeModeInventoryScreenMixin",
     "access.AbstractContainerScreenAccessor",
     "client.AbstractWidgetMixin",
     "client.ButtonPositionHintMixin",

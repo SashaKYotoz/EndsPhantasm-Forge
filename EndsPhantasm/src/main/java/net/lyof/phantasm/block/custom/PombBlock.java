@@ -1,5 +1,6 @@
 package net.lyof.phantasm.block.custom;
 
+import net.lyof.phantasm.config.ConfigEntries;
 import net.lyof.phantasm.effect.ModEffects;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
@@ -41,8 +42,8 @@ public class PombBlock extends FallingBlock {
     public void onBrokenAfterFall(Level level, BlockPos pos, FallingBlockEntity entity) {
         for (Entity entity1 : level.getEntities(null, new AABB(pos).inflate(5))) {
             if (entity1 instanceof LivingEntity living) {
-                living.hurt(living.damageSources().dragonBreath(), 5);
-                living.addEffect(new MobEffectInstance(ModEffects.CORROSION.get(), 200, 0));
+                living.hurt(living.damageSources().dragonBreath(), (float) ConfigEntries.fallingPombDamage);
+                living.addEffect(new MobEffectInstance(ModEffects.CORROSION.get(), ConfigEntries.fallingPombDuration, ConfigEntries.fallingPombAmplifier));
                 entity1.setDeltaMovement(entity1.position().add(0, 0.5, 0).subtract(pos.getCenter()).normalize().scale(3));
             }
         }

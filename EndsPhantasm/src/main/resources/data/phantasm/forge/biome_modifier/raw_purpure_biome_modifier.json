@@ -1,0 +1,11 @@
+{
+  "type": "phantasm:raw_purpure",
+  "biomes": [
+    "minecraft:end_midlands",
+    "minecraft:end_highlands",
+    "minecraft:end_barrens",
+    "phantasm:dreaming_den",
+    "phantasm:acidburnt_abysses"
+  ],
+  "features": "phantasm:raw_purpur_coal_ore"
+}

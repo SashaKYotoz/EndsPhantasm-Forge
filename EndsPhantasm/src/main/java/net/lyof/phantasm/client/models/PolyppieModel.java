@@ -10,6 +10,7 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 
 public class PolyppieModel<T extends PolyppieEntity> extends HierarchicalModel<T> {
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(Phantasm.MOD_ID, "polyppie_model"), "main");
@@ -27,29 +28,33 @@ public class PolyppieModel<T extends PolyppieEntity> extends HierarchicalModel<T
 		this.legs_secondary = this.legs.getChild("legs_secondary");
 	}
 
-	public static LayerDefinition getTexturedModelData() {
-        MeshDefinition modelData = new MeshDefinition();
-        PartDefinition modelPartData = modelData.getRoot();
-        PartDefinition main = modelPartData.addOrReplaceChild("main", CubeListBuilder.create(), PartPose.offset(0.0F, 24.0F, 0.0F));
+    public static LayerDefinition getTexturedModelData() {
+        MeshDefinition meshdefinition = new MeshDefinition();
+        PartDefinition partdefinition = meshdefinition.getRoot();
+
+        PartDefinition main = partdefinition.addOrReplaceChild("main", CubeListBuilder.create(), PartPose.offset(0.0F, 24.0F, 0.0F));
 
         PartDefinition head = main.addOrReplaceChild("head", CubeListBuilder.create().texOffs(0, 0).addBox(-6.0F, -8.0F, -3.5F, 12.0F, 7.0F, 7.0F, new CubeDeformation(0.0F))
-				.texOffs(31, 0).addBox(-6.0F, -11.0F, 0.0F, 12.0F, 3.0F, 0.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
+                .texOffs(31, 0).addBox(-6.0F, -11.0F, 0.0F, 12.0F, 3.0F, 0.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
 
-        PartDefinition legs = main.addOrReplaceChild("legs", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
+        PartDefinition legs = main.addOrReplaceChild("legs", CubeListBuilder.create(), PartPose.offset(0.0F, -3.0F, 0.0F));
 
-        PartDefinition legs_primary = legs.addOrReplaceChild("legs_primary", CubeListBuilder.create().texOffs(0, 14).addBox(-5.0F, -1.0F, -2.0F, 10.0F, 1.0F, 0.0F, new CubeDeformation(0.0F))
-				.texOffs(0, 15).addBox(-5.0F, -1.0F, 0.0F, 10.0F, 1.0F, 0.0F, new CubeDeformation(0.0F))
-				.texOffs(0, 16).addBox(-5.0F, -1.0F, 2.0F, 10.0F, 1.0F, 0.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
+        PartDefinition legs_primary = legs.addOrReplaceChild("legs_primary", CubeListBuilder.create().texOffs(0, 14).addBox(-5.0F, -2.0F, -2.0F, 10.0F, 2.0F, 0.0F, new CubeDeformation(0.0F))
+                .texOffs(0, 15).addBox(-5.0F, -2.0F, 0.0F, 10.0F, 2.0F, 0.0F, new CubeDeformation(0.0F))
+                .texOffs(0, 16).addBox(-5.0F, -2.0F, 2.0F, 10.0F, 2.0F, 0.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 3.0F, 0.0F));
 
-        PartDefinition legs_secondary = legs.addOrReplaceChild("legs_secondary", CubeListBuilder.create().texOffs(0, 17).addBox(-5.0F, -1.0F, -2.0F, 10.0F, 1.0F, 0.0F, new CubeDeformation(0.0F))
-				.texOffs(0, 18).addBox(-5.0F, -1.0F, 0.0F, 10.0F, 1.0F, 0.0F, new CubeDeformation(0.0F))
-				.texOffs(0, 19).addBox(-5.0F, -1.0F, 2.0F, 10.0F, 1.0F, 0.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
-		return LayerDefinition.create(modelData, 64, 64);
-	}
+        PartDefinition legs_secondary = legs.addOrReplaceChild("legs_secondary", CubeListBuilder.create().texOffs(0, 17).addBox(-5.0F, -2.0F, -2.0F, 10.0F, 2.0F, 0.0F, new CubeDeformation(0.0F))
+                .texOffs(0, 18).addBox(-5.0F, -2.0F, 0.0F, 10.0F, 2.0F, 0.0F, new CubeDeformation(0.0F))
+                .texOffs(0, 19).addBox(-5.0F, -2.0F, 2.0F, 10.0F, 2.0F, 0.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 3.0F, 0.0F));
+
+        return LayerDefinition.create(meshdefinition, 64, 64);
+    }
 
 	@Override
 	public void setupAnim(PolyppieEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-
+        float modifier = Math.min((float) entity.getDeltaMovement().lengthSqr() * 200.0F, 8.0F);
+        this.legs.xRot = Mth.sin(limbSwing * 0.5F) * limbSwingAmount * modifier;
+        this.legs.zRot = Mth.sin(limbSwingAmount) * 0.125f * modifier;
 	}
 
 	@Override

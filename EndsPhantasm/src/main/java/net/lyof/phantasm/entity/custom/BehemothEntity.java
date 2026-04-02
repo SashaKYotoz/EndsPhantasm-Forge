@@ -80,12 +80,22 @@ public class BehemothEntity extends Monster implements Enemy {
 
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
+        return SoundEvents.SNIFFER_SNIFFING;
+    }
+
+    @Override
+    protected SoundEvent getAmbientSound() {
         return ModSounds.BEHEMOTH_AMBIENT;
     }
 
     @Override
     protected SoundEvent getDeathSound() {
         return ModSounds.BEHEMOTH_DYING;
+    }
+
+    @Override
+    public float getVoicePitch() {
+        return 0.85f;
     }
 
     public boolean isAngry() {
@@ -113,7 +123,7 @@ public class BehemothEntity extends Monster implements Enemy {
         if (target == null && this.isAngry()) this.setAnimation(BehemothAnimation.WAKING_DOWN);
         else if (target != null && !this.isAngry()) {
             this.setAnimation(BehemothAnimation.WAKING_UP);
-            this.playSound(SoundEvents.ENDER_DRAGON_GROWL, 1, 1);
+            this.playSound(ModSounds.BEHEMOTH_AMBIENT, 0.9f, 1.5F);
         }
 
         super.setTarget(target);

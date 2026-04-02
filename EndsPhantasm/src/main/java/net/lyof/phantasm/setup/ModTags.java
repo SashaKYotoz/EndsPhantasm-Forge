@@ -12,7 +12,7 @@ import net.minecraft.world.level.gameevent.GameEvent;
 
 public class ModTags {
     public static class Items {
-        public static final TagKey<Item> XP_BOOSTED = tag("gets_xp_speed_boost");
+        public static final TagKey<Item> XP_BOOSTED = tag("has_xp_boost");
         public static final TagKey<Item> PREAM_LOGS = tag("pream_logs");
         public static final TagKey<Item> CRYSTAL_FLOWERS = tag("crystal_flowers");
 

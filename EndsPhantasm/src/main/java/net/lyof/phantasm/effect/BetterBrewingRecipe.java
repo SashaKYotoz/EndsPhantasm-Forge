@@ -7,16 +7,7 @@ import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraftforge.common.brewing.IBrewingRecipe;
 
-public class BetterBrewingRecipe implements IBrewingRecipe {
-    private final Potion input;
-    private final Item ingredient;
-    private final Potion output;
-
-    public BetterBrewingRecipe(Potion input, Item ingredient, Potion output) {
-        this.input = input;
-        this.ingredient = ingredient;
-        this.output = output;
-    }
+public record BetterBrewingRecipe(Potion input, Item ingredient, Potion output) implements IBrewingRecipe {
 
     @Override
     public boolean isInput(ItemStack input) {
@@ -30,7 +21,7 @@ public class BetterBrewingRecipe implements IBrewingRecipe {
 
     @Override
     public ItemStack getOutput(ItemStack input, ItemStack ingredient) {
-        if(!this.isInput(input) || !this.isIngredient(ingredient)) {
+        if (!this.isInput(input) || !this.isIngredient(ingredient)) {
             return ItemStack.EMPTY;
         }
 

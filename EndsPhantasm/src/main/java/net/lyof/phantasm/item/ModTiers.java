@@ -1,6 +1,7 @@
 package net.lyof.phantasm.item;
 
 import net.lyof.phantasm.block.ModBlocks;
+import net.lyof.phantasm.config.ConfigEntries;
 import net.minecraft.util.LazyLoadedValue;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -9,7 +10,7 @@ import java.util.function.Supplier;
 
 public enum ModTiers implements Tier {
 
-    CRYSTALLINE(2, 312, 8f, 1f, 17,()->
+    CRYSTALLINE(2, ConfigEntries.crystallineDurability, 8f, 1f, 17,()->
             Ingredient.of(ModBlocks.CRYSTAL_SHARD.get(), ModBlocks.VOID_CRYSTAL_SHARD.get())),
     STELLIUM(4, 1014, 8f, 5f, 13,()-> Ingredient.EMPTY);
 

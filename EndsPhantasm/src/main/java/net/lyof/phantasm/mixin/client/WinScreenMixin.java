@@ -3,6 +3,7 @@ package net.lyof.phantasm.mixin.client;
 import com.google.common.collect.Lists;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
+import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
@@ -18,8 +19,6 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -40,15 +39,15 @@ public abstract class WinScreenMixin implements MixinAccess<Boolean> {
 
     @Unique private boolean beginningCredits = false;
 
-    @Inject(method = "init", at = @At("HEAD"), cancellable = true)
-    private void initBeginning(CallbackInfo ci) {
+    @WrapMethod(method = "init")
+    private void initBeginning(Operation<Void> original) {
+        original.call();
         if (this.beginningCredits && this.lines == null) {
             this.lines = Lists.newArrayList();
             this.centeredLines = new IntOpenHashSet();
             this.wrapCreditsIO("phantasm:texts/begin.txt", this::addPoemFile);
 
             this.totalScrollLength = this.lines.size() * 12 - 200;
-            ci.cancel();
         }
     }
 

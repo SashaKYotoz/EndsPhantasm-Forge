@@ -166,6 +166,8 @@ public class ModTabs {
         if (tabData.getTabKey() == CreativeModeTabs.SPAWN_EGGS) {
             tabData.accept(ModItems.CRYSTIE_SPAWN_EGG.get());
             tabData.accept(ModItems.BEHEMOTH_SPAWN_EGG.get());
+            tabData.accept(ModItems.POLYPPIE_SPAWN_EGG.get());
+            tabData.accept(ModItems.SOUR_SLUDGE_SPAWN_EGG.get());
         }
     }
 }

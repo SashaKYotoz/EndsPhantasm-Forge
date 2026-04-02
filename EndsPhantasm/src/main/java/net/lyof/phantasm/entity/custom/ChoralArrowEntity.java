@@ -14,6 +14,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Arrow;
 import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.CrossbowItem;
@@ -50,7 +51,8 @@ public class ChoralArrowEntity extends Arrow {
     protected void doPostHurtEffects(LivingEntity entity) {
         if (!this.shotByCrossbow) {
             super.doPostHurtEffects(entity);
-            entity.addEffect(new MobEffectInstance(ModEffects.CHARM.get(), 40, 0));
+            entity.addEffect(new MobEffectInstance(ModEffects.CHARM.get(), entity instanceof Player ?
+                    ConfigEntries.choralArrowCharmPlayer : ConfigEntries.choralArrowCharm));
         }
     }
 
@@ -93,7 +95,7 @@ public class ChoralArrowEntity extends Arrow {
 
             Vec3 direction = this.getDeltaMovement().normalize();
             Vec3 position = this.position();
-            int range = ConfigEntries.subwooferRange * 2;
+            int range = ConfigEntries.choralArrowCrossbowRange * 2;
 
             List<UUID> affected = new ArrayList<>();
 

@@ -15,6 +15,7 @@ import net.lyof.phantasm.setup.compat.FarmersDelightCompat;
 import net.lyof.phantasm.sound.ModSounds;
 import net.lyof.phantasm.world.ModFeatures;
 import net.lyof.phantasm.world.biome.EndDataCompat;
+import net.lyof.phantasm.world.biome.ModBiomeModifiers;
 import net.lyof.phantasm.world.feature.tree.ModFoliageTypes;
 import net.lyof.phantasm.world.feature.tree.ModTrunkTypes;
 import net.lyof.phantasm.world.structure.ModStructures;
@@ -72,6 +73,7 @@ public class Phantasm {
 
         ModTabs.CREATIVE_TAB.register(modEventBus);
         ModParticles.PARTICLE_TYPES.register(modEventBus);
+        ModBiomeModifiers.BIOME_MODIFIER_SERIALIZERS.register(modEventBus);
         ModFeatures.register(modEventBus);
         ModStructures.register(modEventBus);
         ModEntities.register(modEventBus);
@@ -112,6 +114,7 @@ public class Phantasm {
             registerBuiltinPack(event, "phantasm_connected_glass", "Phantasm Connected Glass", null);
         }
     }
+
     private void registerBuiltinPack(AddPackFindersEvent event, String folderName, String displayName, @Nullable String modDependency) {
         if (modDependency != null && !ModList.get().isLoaded(modDependency)) return;
 
