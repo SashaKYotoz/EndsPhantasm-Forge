@@ -2,7 +2,6 @@ package net.lyof.phantasm.mixin;
 
 import net.lyof.phantasm.entity.access.PolyppieCarrier;
 import net.lyof.phantasm.screen.access.PolyppieInventory;
-import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -18,6 +17,7 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(InventoryMenu.class)
 public abstract class InventoryMenuMixin extends AbstractContainerMenu implements PolyppieInventory.Handler {
@@ -28,20 +28,15 @@ public abstract class InventoryMenuMixin extends AbstractContainerMenu implement
     protected InventoryMenuMixin(@Nullable MenuType<?> type, int syncId) {
         super(type, syncId);
     }
-
-    @Unique
-    private Container polyppieInventory = null;
     @Unique private Slot phantasm_slot = null;
     @Unique private boolean phantasm_visible = true;
 
     @Inject(method = "<init>", at = @At("TAIL"))
     private void initPolyppieScreenHandler(Inventory inventory, boolean onServer, Player owner, CallbackInfo ci) {
         if (this.owner instanceof PolyppieCarrier carrier) {
-            this.polyppieInventory = new PolyppieInventory(carrier);
-
             int x = 8, y = 166 - 10 + 8;
 
-            this.phantasm_slot = this.addSlot(new Slot(this.polyppieInventory, this.slots.size(), x, y) {
+            this.phantasm_slot = this.addSlot(new Slot(new PolyppieInventory(carrier), this.slots.size(), x, y) {
                 @Override
                 public void onQuickCraft(ItemStack newItem, ItemStack original) {
                     super.onQuickCraft(newItem, original);
@@ -54,6 +49,19 @@ public abstract class InventoryMenuMixin extends AbstractContainerMenu implement
                             && InventoryMenuMixin.this.phantasm_visible;
                 }
             });
+        }
+    }
+    @Inject(method = "quickMoveStack", at = @At("HEAD"), cancellable = true)
+    public void quickPolyppieMove(Player player, int slotid, CallbackInfoReturnable<ItemStack> cir) {
+        Slot slot = this.getSlot(slotid);
+        ItemStack stack = slot.getItem();
+
+        if (slot == this.phantasm_slot && this.moveItemStackTo(stack, 6, 42, true)) {
+            cir.setReturnValue(ItemStack.EMPTY);
+            this.phantasm_slot.setChanged();
+        } else if (this.phantasm_slot.safeInsert(stack).isEmpty()) {
+            cir.setReturnValue(ItemStack.EMPTY);
+            this.phantasm_slot.setChanged();
         }
     }
 

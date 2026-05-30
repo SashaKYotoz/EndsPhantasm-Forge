@@ -11,7 +11,6 @@ import net.lyof.phantasm.setup.packets.BeginCutsceneStartsPacket;
 import net.lyof.phantasm.util.MixinAccess;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.PlayerAdvancements;
@@ -21,9 +20,8 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.util.ITeleporter;
+import net.minecraftforge.fml.ModList;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -31,7 +29,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(value = ServerPlayer.class, priority = 990)
+@Mixin(value = ServerPlayer.class, priority = 1001)
 public abstract class ServerPlayerEntityMixin extends Entity implements MixinAccess<Boolean> {
     @Shadow
     public abstract ServerLevel serverLevel();
@@ -58,15 +56,8 @@ public abstract class ServerPlayerEntityMixin extends Entity implements MixinAcc
 
     @WrapOperation(method = "lambda$changeDimension$8", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/level/ServerPlayer;createEndPlatform(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/core/BlockPos;)V"))
     public void noPlatform(ServerPlayer instance, ServerLevel serverlevel, BlockPos pos, Operation<Void> original) {
-        BlockPos.MutableBlockPos mutable = ServerLevel.END_SPAWN_POINT.mutable();
-        for (int i = -2; i <= 2; ++i) {
-            for (int j = -2; j <= 2; ++j) {
-                for (int k = -1; k < 3; ++k) {
-                    BlockState blockState = k == -1 ? Blocks.OBSIDIAN.defaultBlockState() : Blocks.AIR.defaultBlockState();
-                    serverlevel.setBlockAndUpdate(mutable.set(ServerLevel.END_SPAWN_POINT).move(Direction.DOWN, 2).move(j, k, i), blockState);
-                }
-            }
-        }
+        original.call(instance, serverlevel, ModList.get().isLoaded("betterendisland") && !ConfigEntries.outerEndFirst
+                ? ServerLevel.END_SPAWN_POINT.below() : ServerLevel.END_SPAWN_POINT);
     }
 
     @WrapMethod(method = "Lnet/minecraft/server/level/ServerPlayer;changeDimension(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraftforge/common/util/ITeleporter;)Lnet/minecraft/world/entity/Entity;", remap = false)
@@ -76,16 +67,10 @@ public abstract class ServerPlayerEntityMixin extends Entity implements MixinAcc
 
         if (destination.dimension() == Level.END) {
             if (!this.seenBeginning && ConfigEntries.beginCutscene) {
-                this.isChangingDimension = true;
                 self.unRide();
-                this.serverLevel().removePlayerImmediately(self, RemovalReason.CHANGED_DIMENSION);
-
-                if (!this.wonGame) {
-                    this.wonGame = true;
-                    ModPackets.sendToPlayer(new BeginCutsceneStartsPacket(), self);
-                }
-
-                return this;
+                ModPackets.sendToPlayer(new BeginCutsceneStartsPacket(), self);
+                this.wonGame = true;
+                return self;
             }
         }
 

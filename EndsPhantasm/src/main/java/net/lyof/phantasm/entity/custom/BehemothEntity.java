@@ -2,6 +2,7 @@ package net.lyof.phantasm.entity.custom;
 
 import io.netty.buffer.Unpooled;
 import net.lyof.phantasm.client.particles.ModParticles;
+import net.lyof.phantasm.config.ConfigEntries;
 import net.lyof.phantasm.entity.animations.BehemothAnimation;
 import net.lyof.phantasm.entity.goals.BehemothAttackGoal;
 import net.lyof.phantasm.entity.goals.SleepGoal;
@@ -94,6 +95,11 @@ public class BehemothEntity extends Monster implements Enemy {
     }
 
     @Override
+    public boolean isPushable() {
+        return false;
+    }
+
+    @Override
     public float getVoicePitch() {
         return 0.85f;
     }
@@ -123,7 +129,7 @@ public class BehemothEntity extends Monster implements Enemy {
         if (target == null && this.isAngry()) this.setAnimation(BehemothAnimation.WAKING_DOWN);
         else if (target != null && !this.isAngry()) {
             this.setAnimation(BehemothAnimation.WAKING_UP);
-            this.playSound(ModSounds.BEHEMOTH_AMBIENT, 0.9f, 1.5F);
+            this.playSound(SoundEvents.ENDER_DRAGON_GROWL, 1, 0.8f);
         }
 
         super.setTarget(target);
@@ -170,7 +176,7 @@ public class BehemothEntity extends Monster implements Enemy {
             this.setTarget(null);
 
         if (!this.isAngry() && this.tickCount % 20 == 0) {
-            this.playSound(SoundEvents.SNIFFER_SNIFFING, 1, 1);
+            this.playSound(ModSounds.BEHEMOTH_AMBIENT, (float) ConfigEntries.behemothSnoringVolume, 1);
             if (this.level().isClientSide() && this.getRandom().nextInt(2) == 0)
                 this.level().addParticle(ModParticles.ZZZ.get(),
                         this.getX() - Math.sin(-this.getYRot() * Math.PI / 180), this.getY() + 0.3,

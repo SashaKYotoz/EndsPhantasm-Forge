@@ -75,7 +75,7 @@ public class ModItems {
     public static final RegistryObject<Item> SHATTERED_PENDANT = ITEMS.register("shattered_pendant", () -> new ShatteredPendantItem(new Item.Properties()));
     public static final RegistryObject<Item> POMB_SLICE = ITEMS.register("pomb_slice", () -> new CorrosiveFoodItem(ConfigEntries.pombSliceCorrosive, new Item.Properties().food(new FoodProperties.Builder().alwaysEat().nutrition(4).saturationMod(1.3f).build())));
     public static final RegistryObject<Item> POP_ROCK_CANDY = ITEMS.register("pop_rock_candy", () -> new CorrosiveFoodItem(ConfigEntries.popRockCandyCorrosive, new Item.Properties().food(new FoodProperties.Builder().alwaysEat().nutrition(3).saturationMod(2).build())));
-    public static final RegistryObject<Item> MUSIC_DISC_ABRUPTION = ITEMS.register("music_disc_abruption", () -> new RecordItem(4, () -> ModSounds.MUSIC_DISC_ABRUPTION, new Item.Properties().stacksTo(1).rarity(Rarity.RARE), 239));
+    public static final RegistryObject<Item> MUSIC_DISC_ABRUPTION = ITEMS.register("music_disc_abruption", () -> new RecordItem(4, () -> ModSounds.MUSIC_DISC_ABRUPTION, new Item.Properties().stacksTo(1).rarity(Rarity.RARE), 4780));
     public static final RegistryObject<Item> CHORAL_ARROW = ITEMS.register("choral_arrow", () -> new ChoralArrowItem(new Item.Properties()));
 
     public static final RegistryObject<Item> EGGS_NIHILO = ITEMS.register("eggs_nihilo", () -> new EggsNihiloBlockItem(ModBlocks.EGGS_NIHILO.get(), new Item.Properties().food(EGGS_NIHILO_PROPERTIES)));

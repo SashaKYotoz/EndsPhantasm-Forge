@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.At;
 @Mixin(CreativeModeInventoryScreen.class)
 public class CreativeModeInventoryScreenMixin {
     @WrapWithCondition(method = "selectTab", at = @At(value = "INVOKE",ordinal = 2, target = "Lnet/minecraft/core/NonNullList;add(Ljava/lang/Object;)Z"))
-    private <E> boolean hidePolyppieSlot(NonNullList instance, Object o) {
+    private <E> boolean hidePolyppieSlot(NonNullList<E> instance, E o) {
         return o instanceof Slot slot && !(slot.container instanceof PolyppieInventory);
     }
 }

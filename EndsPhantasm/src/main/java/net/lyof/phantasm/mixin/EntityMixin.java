@@ -21,6 +21,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Set;
 
@@ -29,23 +30,31 @@ public abstract class EntityMixin {
     @Shadow
     public abstract Set<String> getTags();
 
-    @ModifyReturnValue(method = "findDimensionEntryPoint", at = @At("RETURN"))
-    public PortalInfo spawnInOuterEnd(PortalInfo original, ServerLevel destination) {
+    @Shadow
+    public abstract Vec3 getDeltaMovement();
+
+    @Shadow
+    public abstract float getXRot();
+
+    @Shadow
+    public abstract float getYRot();
+
+    @Inject(method = "findDimensionEntryPoint", at = @At("HEAD"), cancellable = true)
+    public void spawnInOuterEnd(ServerLevel destination, CallbackInfoReturnable<PortalInfo> cir) {
         if (destination.dimension() == Level.END && ConfigEntries.outerEndFirst) {
-            PortalInfo result = original;
             BlockPos p = new BlockPos(1280, 60, 0);
 
-            BlockPos pos = EndGatewayBlockEntityAccessor.getExitPos(destination, p).above(2);
-            if (destination.getBlockState(pos.below(3)).isAir()) {
+            BlockPos pos = EndGatewayBlockEntityAccessor.getExitPos(destination, p);
+            if (destination.getBlockState(pos.below()).isAir()) {
                 destination.registryAccess().registry(Registries.CONFIGURED_FEATURE).flatMap(registry ->
                         registry.getHolder(EndFeatures.END_ISLAND)).ifPresent(reference ->
                         reference.get().place(destination, destination.getChunkSource().getGenerator(),
-                                RandomSource.create(pos.asLong()), pos.below(2)));
+                                RandomSource.create(pos.asLong()), pos));
             }
 
-            original = new PortalInfo(new Vec3(pos.getX(), pos.getY(), pos.getZ()), result.speed, result.yRot, result.xRot);
+            cir.setReturnValue(new PortalInfo(new Vec3(pos.getX() + 0.5, pos.getY() + 3, pos.getZ() + 0.5),
+                    this.getDeltaMovement(), this.getXRot(), this.getYRot()));
         }
-        return original;
     }
 
     @Inject(method = "turn", at = @At("HEAD"), cancellable = true)
@@ -53,6 +62,7 @@ public abstract class EntityMixin {
         if (((Entity) (Object) this) instanceof LivingEntity living && living.hasEffect(ModEffects.CHARM.get()))
             ci.cancel();
     }
+
     @ModifyReturnValue(method = "getTypeName", at = @At("RETURN"))
     public Component setChallengeName(Component original) {
         if (this.getTags().contains(Phantasm.MOD_ID + ".challenge"))

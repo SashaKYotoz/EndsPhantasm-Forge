@@ -40,8 +40,6 @@
   "client": [
     "CreativeModeInventoryScreenMixin",
     "access.AbstractContainerScreenAccessor",
-    "client.AbstractWidgetMixin",
-    "client.ButtonPositionHintMixin",
     "client.DimensionSpecialEffectsMixin",
     "client.GuiMixin",
     "client.InventoryScreenMixin",

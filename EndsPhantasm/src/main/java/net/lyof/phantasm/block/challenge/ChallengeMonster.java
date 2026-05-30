@@ -45,11 +45,12 @@ public class ChallengeMonster {
         ((Challenger) entity).setChallengeRune(rune);
         if (entity instanceof Mob mob)
             mob.setPersistenceRequired();
-        if (entity instanceof Vex vex)
-            vex.setBoundOrigin(rune.getBlockPos().above(5));
         if (entity instanceof Slime slime)
             slime.setSize((int) Math.pow(2, rune.getLevel().getRandom().nextInt(3)), true);
-
+        if (entity instanceof Vex vex) {
+            entity.addTag("vex");
+            vex.setBoundOrigin(rune.getBlockPos().above(5));
+        }
         return entity;
     }
 
@@ -58,8 +59,11 @@ public class ChallengeMonster {
         if (json.has("entity")) {
             EntityType<?> entity = BuiltInRegistries.ENTITY_TYPE.get(ResourceLocation.parse(json.get("entity").getAsString()));
             if (entity == EntityType.PIG && !json.get("entity").getAsString().equals("minecraft:pig")) return;
-            try { EntityType<? extends LivingEntity> e = (EntityType<? extends LivingEntity>) entity; }
-            catch (Exception ignored) { return; }
+            try {
+                EntityType<? extends LivingEntity> e = (EntityType<? extends LivingEntity>) entity;
+            } catch (Exception ignored) {
+                return;
+            }
 
             JsonObject attributesObject = json.has("attributes")
                     ? json.getAsJsonObject("attributes") : new JsonObject();

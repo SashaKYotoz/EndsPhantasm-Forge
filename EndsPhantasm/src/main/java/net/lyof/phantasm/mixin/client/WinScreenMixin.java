@@ -42,7 +42,7 @@ public abstract class WinScreenMixin implements MixinAccess<Boolean> {
     @WrapMethod(method = "init")
     private void initBeginning(Operation<Void> original) {
         original.call();
-        if (this.beginningCredits && this.lines == null) {
+        if (this.beginningCredits) {
             this.lines = Lists.newArrayList();
             this.centeredLines = new IntOpenHashSet();
             this.wrapCreditsIO("phantasm:texts/begin.txt", this::addPoemFile);
