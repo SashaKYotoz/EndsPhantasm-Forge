@@ -38,9 +38,8 @@ public abstract class InventoryMenuMixin extends AbstractContainerMenu implement
 
             this.phantasm_slot = this.addSlot(new Slot(new PolyppieInventory(carrier), this.slots.size(), x, y) {
                 @Override
-                public void onQuickCraft(ItemStack newItem, ItemStack original) {
-                    super.onQuickCraft(newItem, original);
-                    this.container.setChanged();
+                public boolean mayPlace(ItemStack stack) {
+                    return this.container.canPlaceItem(this.index, stack);
                 }
 
                 @Override
