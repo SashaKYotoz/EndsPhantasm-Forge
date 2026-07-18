@@ -1,6 +1,5 @@
 package net.lyof.phantasm.block.entities;
 
-import io.netty.buffer.Unpooled;
 import net.lyof.phantasm.block.ModBlocks;
 import net.lyof.phantasm.block.challenge.Challenge;
 import net.lyof.phantasm.block.challenge.ChallengeRegistry;
@@ -14,7 +13,6 @@ import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
@@ -40,7 +38,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class ChallengeRuneBlockEntity extends BlockEntity {
-    private static final ResourceLocation DRAGON = ResourceLocation.fromNamespaceAndPath("minecraft", "end/kill_dragon");
+    private static final ResourceLocation DRAGON = new ResourceLocation("minecraft", "end/kill_dragon");
 
     private final List<UUID> completedPlayerUuids;
     private final List<UUID> challengerUuids;
@@ -64,7 +62,7 @@ public class ChallengeRuneBlockEntity extends BlockEntity {
     public void load(CompoundTag nbt) {
         super.load(nbt);
 
-        this.setChallenge(ResourceLocation.parse(nbt.getString("ChallengeId")));
+        this.setChallenge(new ResourceLocation(nbt.getString("ChallengeId")));
 
         int size = nbt.getInt("CompletedPlayerCount");
         for (int i = 0; i < size; i++)
@@ -187,11 +185,8 @@ public class ChallengeRuneBlockEntity extends BlockEntity {
 
         for (Player participant : player.level().players()) {
             if (participant.position().distanceTo(Vec3.atLowerCornerOf(this.getBlockPos())) < Challenge.R) {
-                if (!this.getLevel().isClientSide()) {
-                    FriendlyByteBuf buf = new FriendlyByteBuf(Unpooled.buffer());
-                    buf.writeBlockPos(this.getBlockPos());
-                    ModPackets.sendToPlayer(new ChallengeStartsPacket(buf), (ServerPlayer) participant);
-                }
+                if (this.level != null && !this.level.isClientSide())
+                    ModPackets.sendToPlayer(new ChallengeStartsPacket(this.getBlockPos()), (ServerPlayer) participant);
 
                 this.addChallenger(participant);
             }
@@ -203,8 +198,9 @@ public class ChallengeRuneBlockEntity extends BlockEntity {
         this.progress = 0;
         this.challengerUuids.clear();
 
-        this.level.playSound(null, this.getBlockPos(), SoundEvents.END_PORTAL_SPAWN, SoundSource.BLOCKS,
-                10, 1);
+        if (this.level != null)
+            this.level.playSound(null, this.getBlockPos(), SoundEvents.END_PORTAL_SPAWN, SoundSource.BLOCKS,
+                    10, 1);
         this.bossbar.setProgress(1);
 
         setChanged(level, worldPosition, this.getBlockState());
@@ -224,21 +220,17 @@ public class ChallengeRuneBlockEntity extends BlockEntity {
                 challenger.setChallengeRune(null);
         }
 
-        if (!this.getLevel().isClientSide()) {
+        if (this.level != null && !this.level.isClientSide()) {
             if (success)
                 this.challenge.spawnLoot(this);
 
-            FriendlyByteBuf buf = new FriendlyByteBuf(Unpooled.buffer());
-            buf.writeBlockPos(this.getBlockPos());
-            buf.writeBoolean(success);
-
             for (Player player : this.getLevel().players()) {
-                ModPackets.sendToPlayer(new ChallengeEndsPacket(buf), (ServerPlayer) player);
+                ModPackets.sendToPlayer(new ChallengeEndsPacket(this.getBlockPos(), success), (ServerPlayer) player);
                 this.bossbar.removePlayer((ServerPlayer) player);
             }
         }
 
-        if (level != null){
+        if (level != null) {
             for (Entity entity : level.getEntitiesOfClass(Entity.class, AABB.unitCubeFromLowerCorner(this.getBlockPos().above((int) Challenge.R / 2).getCenter()).inflate(Challenge.R * 2),
                     e -> e instanceof Challenger challenger && challenger.getChallengeRune() == this)) {
 

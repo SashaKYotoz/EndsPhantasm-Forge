@@ -12,8 +12,8 @@ import java.util.Map;
 
 public record DiscVisuals(ResourceLocation progressBar, ResourceLocation notes) {
 
-    private static final DiscVisuals DEFAULT = new DiscVisuals(ResourceLocation.fromNamespaceAndPath("minecraft", "textures/gui/polyppie/progress_bar.png"),
-            ResourceLocation.fromNamespaceAndPath("minecraft", "textures/gui/polyppie/notes.png"));
+    private static final DiscVisuals DEFAULT = new DiscVisuals(new ResourceLocation("minecraft", "textures/gui/polyppie/progress_bar.png"),
+            new ResourceLocation("minecraft", "textures/gui/polyppie/notes.png"));
     private static final Map<ResourceLocation, DiscVisuals> toLoad = new HashMap<>();
     private static final Map<Item, DiscVisuals> instances = new HashMap<>();
 
@@ -35,14 +35,14 @@ public record DiscVisuals(ResourceLocation progressBar, ResourceLocation notes) 
     public static void read(JsonObject json) {
         if (!json.has("disc")) return;
 
-        ResourceLocation disc = ResourceLocation.parse(json.get("disc").getAsString());
+        ResourceLocation disc = new ResourceLocation(json.get("disc").getAsString());
 
         ResourceLocation progressBar = DEFAULT.progressBar;
         ResourceLocation notes = DEFAULT.notes;
         if (json.has("progress_bar"))
-            progressBar = ResourceLocation.parse(json.get("progress_bar").getAsString());
+            progressBar = new ResourceLocation(json.get("progress_bar").getAsString());
         if (json.has("notes"))
-            notes = ResourceLocation.parse(json.get("notes").getAsString());
+            notes = new ResourceLocation(json.get("notes").getAsString());
 
         toLoad.putIfAbsent(disc, new DiscVisuals(progressBar, notes));
     }

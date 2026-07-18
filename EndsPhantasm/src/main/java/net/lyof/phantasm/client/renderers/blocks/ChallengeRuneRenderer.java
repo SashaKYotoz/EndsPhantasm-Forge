@@ -47,7 +47,7 @@ public class ChallengeRuneRenderer implements BlockEntityRenderer<ChallengeRuneB
         return Vec3.atCenterOf(entity.getBlockPos()).multiply(1.0, 0.0, 1.0).closerThan(vec3d.multiply(1.0, 0.0, 1.0), this.getViewDistance());
     }
 
-    public static final ResourceLocation TOWER_BASE_TEXTURE = ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/obsidian.png");
+    public static final ResourceLocation TOWER_BASE_TEXTURE = new ResourceLocation("minecraft", "textures/block/obsidian.png");
     public static final ResourceLocation RUNE_BARRIER_TEXTURE = Phantasm.makeID("textures/particle/rune_barrier.png");
 
     @Override

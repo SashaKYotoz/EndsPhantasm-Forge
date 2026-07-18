@@ -49,7 +49,6 @@ import org.slf4j.LoggerFactory;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-@SuppressWarnings("removal")
 @Mod(Phantasm.MOD_ID)
 public class Phantasm {
     public static final String MOD_ID = "phantasm";
@@ -87,7 +86,7 @@ public class Phantasm {
     }
 
     public static ResourceLocation makeID(String id) {
-        return ResourceLocation.fromNamespaceAndPath(MOD_ID, id);
+        return new ResourceLocation(MOD_ID, id);
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {

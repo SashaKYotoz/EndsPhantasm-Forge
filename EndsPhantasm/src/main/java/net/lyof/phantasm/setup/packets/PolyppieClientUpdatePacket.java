@@ -7,10 +7,13 @@ import net.minecraftforge.network.NetworkEvent;
 import java.util.function.Supplier;
 
 public class PolyppieClientUpdatePacket {
-    private int id = 1;
+    private final int id;
 
     public PolyppieClientUpdatePacket(FriendlyByteBuf buffer) {
         this.id = buffer.readInt();
+    }
+    public PolyppieClientUpdatePacket(int id) {
+        this.id = id;
     }
 
     public void toBytes(FriendlyByteBuf buffer) {

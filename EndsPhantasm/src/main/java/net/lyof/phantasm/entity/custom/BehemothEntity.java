@@ -1,6 +1,5 @@
 package net.lyof.phantasm.entity.custom;
 
-import io.netty.buffer.Unpooled;
 import net.lyof.phantasm.client.particles.ModParticles;
 import net.lyof.phantasm.config.ConfigEntries;
 import net.lyof.phantasm.entity.animations.BehemothAnimation;
@@ -11,7 +10,9 @@ import net.lyof.phantasm.setup.ModPackets;
 import net.lyof.phantasm.setup.packets.BehemothAwakesPacket;
 import net.lyof.phantasm.sound.ModSounds;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
@@ -39,14 +40,34 @@ public class BehemothEntity extends Monster implements Enemy {
     public static final EntityDimensions STANDARD_DIMENSIONS = EntityDimensions.fixed(0.95f, 1.95f);
     public int angryTicks = 0;
     public int animTicks = 0;
-    public BehemothAnimation animation = BehemothAnimation.SLEEPING;
     public static int MAX_ANGRY_TICKS = 600;
+
+    private static final EntityDataAccessor<String> ANIMATION_STATE =
+            SynchedEntityData.defineId(BehemothEntity.class, EntityDataSerializers.STRING);
 
     public final DynamicGameEventListener<BehemothEventListener> listener = new DynamicGameEventListener<>(new BehemothEventListener(this));
 
     public BehemothEntity(EntityType<? extends Monster> type, Level level) {
         super(type, level);
         this.xpReward = Enemy.XP_REWARD_LARGE;
+    }
+
+    @Override
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(ANIMATION_STATE, BehemothAnimation.SLEEPING.name);
+    }
+
+    public void setAnimation(BehemothAnimation anim) {
+        if (anim != this.getAnimation()) {
+            this.animTicks = 0;
+            this.entityData.set(ANIMATION_STATE, anim.name);
+            this.refreshDimensions();
+        }
+    }
+
+    public BehemothAnimation getAnimation() {
+        return BehemothAnimation.byName(this.entityData.get(ANIMATION_STATE));
     }
 
     @Override
@@ -71,17 +92,12 @@ public class BehemothEntity extends Monster implements Enemy {
 
     @Override
     public EntityDimensions getDimensions(Pose pose) {
-        return this.animation == BehemothAnimation.SLEEPING ? SLEEPING_DIMENSIONS : STANDARD_DIMENSIONS;
+        return this.getAnimation() == BehemothAnimation.SLEEPING ? SLEEPING_DIMENSIONS : STANDARD_DIMENSIONS;
     }
 
     @Override
     public float getStepHeight() {
         return 1f;
-    }
-
-    @Override
-    protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundEvents.SNIFFER_SNIFFING;
     }
 
     @Override
@@ -119,11 +135,8 @@ public class BehemothEntity extends Monster implements Enemy {
     @Override
     public void setTarget(@Nullable LivingEntity target) {
         if (!this.level().isClientSide()) {
-            FriendlyByteBuf buf = new FriendlyByteBuf(Unpooled.buffer());
-            buf.writeInt(this.getId());
-            buf.writeInt(target == null ? 0 : target.getId());
-            for (ServerPlayer player : tracking((ServerLevel) this.level(), new ChunkPos(this.getOnPos())))
-                ModPackets.sendToPlayer(new BehemothAwakesPacket(buf), player);
+            for (ServerPlayer player : tracking((ServerLevel) this.level(), new ChunkPos(this.blockPosition())))
+                ModPackets.sendToPlayer(new BehemothAwakesPacket(this.getId(), target == null ? 0 : target.getId()), player);
         }
 
         if (target == null && this.isAngry()) this.setAnimation(BehemothAnimation.WAKING_DOWN);
@@ -145,12 +158,6 @@ public class BehemothEntity extends Monster implements Enemy {
         return world.getChunkSource().chunkMap.getPlayers(pos, false);
     }
 
-    public void setAnimation(BehemothAnimation anim) {
-        if (anim != this.animation) this.animTicks = 0;
-        this.animation = anim;
-        this.refreshDimensions();
-    }
-
     public static boolean canMobSpawn(EntityType<? extends Mob> type, LevelAccessor world, MobSpawnType spawnReason, BlockPos pos, RandomSource random) {
         BlockPos blockPos = pos.below();
         return spawnReason == MobSpawnType.SPAWNER || world.getBlockState(blockPos).isValidSpawn(world, blockPos, type);
@@ -162,12 +169,15 @@ public class BehemothEntity extends Monster implements Enemy {
         super.tick();
 
         this.animTicks++;
-        if (this.animation.maxTime > 0 && this.animTicks > this.animation.maxTime) {
-            if (this.isAngry())
-                this.setAnimation(BehemothAnimation.WALKING);
-            else
-                this.setAnimation(BehemothAnimation.SLEEPING);
-            //else this.setAnimation(BehemothAnimation.IDLE);
+        if (!this.level().isClientSide()) {
+            if (this.getAnimation().maxTime > 0 && this.animTicks > this.getAnimation().maxTime) {
+                if (this.isAngry() && this.getTarget() != null) {
+                    this.setAnimation(BehemothAnimation.WALKING);
+                    this.moveControl.setWantedPosition(this.getTarget().getX(), this.getTarget().getY(), this.getTarget().getZ(), 1);
+                } else {
+                    this.setAnimation(BehemothAnimation.SLEEPING);
+                }
+            }
         }
 
         if (this.angryTicks > 0) this.angryTicks--;

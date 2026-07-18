@@ -12,9 +12,11 @@ import net.minecraftforge.network.NetworkEvent;
 import java.util.function.Supplier;
 
 public class BeginCutsceneStartsPacket {
-    public BeginCutsceneStartsPacket() {}
+    public BeginCutsceneStartsPacket() {
+    }
 
-    public BeginCutsceneStartsPacket(FriendlyByteBuf buffer) {}
+    public BeginCutsceneStartsPacket(FriendlyByteBuf buffer) {
+    }
 
     public void toBytes(FriendlyByteBuf buffer) {
         buffer.writeBytes(new byte[]{0x0});
@@ -27,6 +29,7 @@ public class BeginCutsceneStartsPacket {
         context.setPacketHandled(true);
         return true;
     }
+
     static class ClientPacketHandler {
         public static void handleBeginCutscene() {
             Minecraft minecraft = Minecraft.getInstance();

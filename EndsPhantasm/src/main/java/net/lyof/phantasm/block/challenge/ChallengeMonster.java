@@ -57,7 +57,7 @@ public class ChallengeMonster {
     @SuppressWarnings("unchecked")
     public static void read(JsonObject json, List<ChallengeMonster> monsters) {
         if (json.has("entity")) {
-            EntityType<?> entity = BuiltInRegistries.ENTITY_TYPE.get(ResourceLocation.parse(json.get("entity").getAsString()));
+            EntityType<?> entity = BuiltInRegistries.ENTITY_TYPE.get(new ResourceLocation(json.get("entity").getAsString()));
             if (entity == EntityType.PIG && !json.get("entity").getAsString().equals("minecraft:pig")) return;
             try {
                 EntityType<? extends LivingEntity> e = (EntityType<? extends LivingEntity>) entity;
@@ -72,7 +72,7 @@ public class ChallengeMonster {
                 if (!entry.getValue().isJsonPrimitive() || !entry.getValue().getAsJsonPrimitive().isNumber())
                     continue;
 
-                Attribute attr = ForgeRegistries.ATTRIBUTES.getValue(ResourceLocation.parse(entry.getKey()));
+                Attribute attr = ForgeRegistries.ATTRIBUTES.getValue(new ResourceLocation(entry.getKey()));
                 if (attr == null) continue;
 
                 attributes.putIfAbsent(attr, entry.getValue().getAsFloat());

@@ -99,9 +99,9 @@ dependencies {
 //    runtimeOnly fg.deobf("curse.maven:unusual-end-617757:5933123")
 //    runtimeOnly fg.deobf("curse.maven:endless-biomes-667688:5679839")
 
-    runtimeOnly fg.deobf("curse.maven:farmers-delight-398521:7596353")
-    runtimeOnly fg.deobf("curse.maven:jei-238222:7391695")
-    runtimeOnly fg.deobf("curse.maven:just-enough-effect-descriptions-jeed-532286:6172935")
+//    runtimeOnly fg.deobf("curse.maven:farmers-delight-398521:7596353")
+//    runtimeOnly fg.deobf("curse.maven:jei-238222:7391695")
+//    runtimeOnly fg.deobf("curse.maven:just-enough-effect-descriptions-jeed-532286:6172935")
     compileOnly fg.deobf("curse.maven:farmers-delight-398521:7596353")
 
     compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:0.5.0"))

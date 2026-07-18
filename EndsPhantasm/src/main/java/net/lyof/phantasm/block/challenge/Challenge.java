@@ -78,7 +78,7 @@ public class Challenge {
 
             ChallengeRegistry.register(id, new Challenge(
                     id,
-                    ResourceLocation.parse(json.get("loot_table").getAsString()),
+                    new ResourceLocation(json.get("loot_table").getAsString()),
                     monsters,
                     json.get("objective").getAsInt(),
                     json.get("level_cost").getAsInt(),

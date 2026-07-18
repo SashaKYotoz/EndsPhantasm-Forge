@@ -14,12 +14,16 @@ import net.minecraftforge.network.NetworkEvent;
 import java.util.function.Supplier;
 
 public class ChallengeEndsPacket {
-    private BlockPos pos;
-    private boolean success;
+    private final BlockPos pos;
+    private final boolean success;
 
     public ChallengeEndsPacket(FriendlyByteBuf buffer) {
         this.pos = buffer.readBlockPos();
         this.success = buffer.readBoolean();
+    }
+    public ChallengeEndsPacket(BlockPos pos, boolean success) {
+        this.pos = pos;
+        this.success = success;
     }
 
     public void toBytes(FriendlyByteBuf buffer) {

@@ -14,7 +14,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
 public class BehemothModel<T extends BehemothEntity> extends HierarchicalModel<T> {
-	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(Phantasm.MOD_ID, "behemoth_model"), "main");
+	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(Phantasm.MOD_ID, "behemoth_model"), "main");
 	public static final float rad = (float) Math.PI / 180f;
 
 	private final ModelPart body;
@@ -53,7 +53,7 @@ public class BehemothModel<T extends BehemothEntity> extends HierarchicalModel<T
 
 	@Override
 	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-		switch (entity.animation) {
+		switch (entity.getAnimation()) {
 			case WALKING -> {
 				this.body.xRot = Mth.sin(entity.animTicks * 3 * rad) * 0.1f;
 				this.left_leg.xRot = Mth.cos(limbSwing * 0.6662f + (float) Math.PI) * 1.4f * limbSwingAmount;

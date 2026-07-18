@@ -47,18 +47,18 @@ public class ConfiguredData {
 
 
     public static void register() {
-        register(ResourceLocation.fromNamespaceAndPath("minecraft", "dimension/the_end.json"), () -> true,
+        register(new ResourceLocation("minecraft", "dimension/the_end.json"), () -> true,
                 Common::changeBiomeSource);
 
         // Huge thanks to Ice (https://linktr.ee/icycrystal) for these noise values
-        register(ResourceLocation.fromNamespaceAndPath("minecraft", "worldgen/noise_settings/end.json"), () -> true,
+        register(new ResourceLocation("minecraft", "worldgen/noise_settings/end.json"), () -> true,
                 Common::changeNoiseRouter);
 
         register(Phantasm.makeID("loot_tables/chests/challenges/elytra.json"),
                 () -> ModList.get().isLoaded("grindy-elytras"),
                 Common::changeElytraChallengeLoot);
 
-        register(ResourceLocation.fromNamespaceAndPath("minecraft", "advancements/end/elytra.json"),
+        register(new ResourceLocation("minecraft", "advancements/end/elytra.json"),
                 () -> ConfigEntries.elytraChallenge, Common::changeElytraParent);
     }
 
@@ -222,7 +222,7 @@ public class ConfiguredData {
                     // add all the default biomes
                     endEntries.asList().addAll(entries.stream()
                             .filter(p -> !p.getAsJsonObject().get("biome").getAsString().equals(Biomes.END_HIGHLANDS.location().toString())
-                                    && !EndDataCompat.contains(ResourceLocation.parse(p.getAsJsonObject().get("biome").getAsString()))).toList());
+                                    && !EndDataCompat.contains(new ResourceLocation(p.getAsJsonObject().get("biome").getAsString()))).toList());
 
                     json.getAsJsonObject().get("generator")
                             .getAsJsonObject().get("biome_source")

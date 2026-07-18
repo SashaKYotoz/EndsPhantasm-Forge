@@ -134,7 +134,7 @@ public class PolyppieEntity extends TamableAnimal implements VariantHolder<Polyp
         this.tickCount = nbt.getLong("TickCount");
 
         this.setSoundKey(nbt.getInt("SoundKey"));
-        this.setVariant(Variant.get(ResourceLocation.parse(nbt.getString("Variant"))));
+        this.setVariant(Variant.get(new ResourceLocation(nbt.getString("Variant"))));
         this.setPaused(nbt.getBoolean("Paused"));
     }
 
@@ -247,7 +247,10 @@ public class PolyppieEntity extends TamableAnimal implements VariantHolder<Polyp
             buf.writeInt(this.getSoundKey());
 
             for (ServerPlayer player : ServerLevel.getServer().getPlayerList().getPlayers())
-                ModPackets.sendToPlayer(new PolyppieServerUpdatePacket(buf), player);
+                ModPackets.sendToPlayer(new PolyppieServerUpdatePacket(
+                        start ? this.getStack().save(new CompoundTag()) : new CompoundTag(),
+                        this.isCarried() ? this.getOwner().getId() : this.getId(),
+                        this.getSoundKey()), player);
         }
     }
 
@@ -364,11 +367,8 @@ public class PolyppieEntity extends TamableAnimal implements VariantHolder<Polyp
     public void setCarriedBy(Player player, Vec3 position) {
         if (position == null) {
             if (player.level() instanceof ServerLevel ServerLevel) {
-                FriendlyByteBuf buf = new FriendlyByteBuf(Unpooled.buffer());
-                buf.writeInt(this.getId());
-                buf.writeInt(player.getId());
                 for (ServerPlayer p : ServerLevel.getServer().getPlayerList().getPlayers())
-                    ModPackets.sendToPlayer(new PolyppieStartsBeingCarriedPacket(buf), p);
+                    ModPackets.sendToPlayer(new PolyppieStartsBeingCarriedPacket(this.getId(), player.getId()), p);
             }
 
             this.removeVehicle();
@@ -400,7 +400,7 @@ public class PolyppieEntity extends TamableAnimal implements VariantHolder<Polyp
                 buf.writeDouble(position.y);
                 buf.writeDouble(position.z);
                 for (ServerPlayer p : ServerLevel.getServer().getPlayerList().getPlayers())
-                    ModPackets.sendToPlayer(new PolyppieStopsBeingCarriedPacket(buf), p);
+                    ModPackets.sendToPlayer(new PolyppieStopsBeingCarriedPacket(polyppie.getId(), player.getId(), position.x, position.y, position.z), p);
 
                 polyppie.setVariant(this.getVariant());
             }
@@ -504,9 +504,9 @@ public class PolyppieEntity extends TamableAnimal implements VariantHolder<Polyp
 
         public static void read(ResourceLocation id, JsonObject json) {
             if (json.has("coral") && json.has("texture")) {
-                Item item = ForgeRegistries.ITEMS.getValue(ResourceLocation.parse(json.get("coral").getAsString()));
+                Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(json.get("coral").getAsString()));
                 if (item != Items.AIR)
-                    instances.putIfAbsent(id, new Variant(id, item, ResourceLocation.parse(json.get("texture").getAsString())));
+                    instances.putIfAbsent(id, new Variant(id, item, new ResourceLocation(json.get("texture").getAsString())));
             }
         }
 

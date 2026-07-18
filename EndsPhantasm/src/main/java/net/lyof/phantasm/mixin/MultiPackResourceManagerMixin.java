@@ -93,7 +93,7 @@ public class MultiPackResourceManagerMixin implements IResourceExistence {
         }
 
         if (startingPath.startsWith("recipes") && !ModList.get().isLoaded("vinurl")) {
-            original.remove(ResourceLocation.fromNamespaceAndPath("vinurl", "recipes/custom_record.json"));
+            original.remove(new ResourceLocation("vinurl", "recipes/custom_record.json"));
         }
 
         return original;

@@ -1,8 +1,6 @@
 package net.lyof.phantasm.entity.goals;
 
 import net.lyof.phantasm.entity.custom.BehemothEntity;
-import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.ai.goal.Goal;
 
 public class SleepGoal extends Goal {
@@ -18,14 +16,7 @@ public class SleepGoal extends Goal {
     }
 
     @Override
-    public boolean canContinueToUse() {
+    public boolean isInterruptable() {
         return self.isAngry();
-    }
-
-    @Override
-    public void tick() {
-        if (self.tickCount % 20 == 0 && self.level() instanceof ServerLevel level)
-            level.sendParticles(ParticleTypes.CAMPFIRE_COSY_SMOKE,
-                    self.getX(), self.getEyeY(), self.getZ(), 1, 0, 0, 0, 0);
     }
 }

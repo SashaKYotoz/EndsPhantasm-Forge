@@ -8,11 +8,14 @@ import net.minecraftforge.network.NetworkEvent;
 import java.util.function.Supplier;
 
 public class BeginCutsceneEndsPacket {
-    public BeginCutsceneEndsPacket() {}
+    public BeginCutsceneEndsPacket() {
+    }
 
-    public BeginCutsceneEndsPacket(FriendlyByteBuf buffer) {}
+    public BeginCutsceneEndsPacket(FriendlyByteBuf buffer) {
+    }
 
-    public void toBytes(FriendlyByteBuf buffer) {}
+    public void toBytes(FriendlyByteBuf buffer) {
+    }
 
     public boolean handle(Supplier<NetworkEvent.Context> supplier) {
         NetworkEvent.Context context = supplier.get();

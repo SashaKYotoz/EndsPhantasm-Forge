@@ -16,6 +16,10 @@ public class PolyppieStartsBeingCarriedPacket {
         this.polyppieid = buffer.readInt();
         this.playerid = buffer.readInt();
     }
+    public PolyppieStartsBeingCarriedPacket(int polyppieid, int playerid) {
+        this.polyppieid = polyppieid;
+        this.playerid = playerid;
+    }
 
     public void toBytes(FriendlyByteBuf buffer) {
         buffer.writeInt(this.polyppieid);

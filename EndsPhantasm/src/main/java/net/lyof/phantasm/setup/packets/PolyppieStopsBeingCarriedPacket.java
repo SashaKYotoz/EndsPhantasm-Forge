@@ -14,8 +14,8 @@ import net.minecraftforge.network.NetworkEvent;
 import java.util.function.Supplier;
 
 public class PolyppieStopsBeingCarriedPacket {
-    private int polyppieid = 0;
-    private int playerid = 0;
+    private int polyppieid;
+    private int playerid;
     double x, y, z;
 
     public PolyppieStopsBeingCarriedPacket(FriendlyByteBuf buffer) {
@@ -24,6 +24,13 @@ public class PolyppieStopsBeingCarriedPacket {
         this.x = buffer.readDouble();
         this.y = buffer.readDouble();
         this.z = buffer.readDouble();
+    }
+    public PolyppieStopsBeingCarriedPacket(int polyppieid, int playerid, double x, double y, double z) {
+        this.polyppieid = polyppieid;
+        this.playerid = playerid;
+        this.x = x;
+        this.y = y;
+        this.z = z;
     }
 
     public void toBytes(FriendlyByteBuf buffer) {

@@ -28,6 +28,11 @@ public class PolyppieServerUpdatePacket {
         this.id = buffer.readInt();
         this.soundKey = buffer.readInt();
     }
+    public PolyppieServerUpdatePacket(CompoundTag tag, int id, int soundKey) {
+        this.nbt = tag;
+        this.id = id;
+        this.soundKey = soundKey;
+    }
 
     public void toBytes(FriendlyByteBuf buffer) {
         buffer.writeNbt(this.nbt);

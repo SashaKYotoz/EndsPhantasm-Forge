@@ -21,8 +21,8 @@ public abstract class GuiMixin {
     protected abstract Player getCameraPlayer();
 
     @Unique
-    private static final ResourceLocation VANILLA_ICONS = ResourceLocation.withDefaultNamespace("textures/gui/icons.png");
-    @Unique private static final ResourceLocation VANILLA_WIDGETS = ResourceLocation.withDefaultNamespace("textures/gui/widgets.png");
+    private static final ResourceLocation VANILLA_ICONS = new ResourceLocation("textures/gui/icons.png");
+    @Unique private static final ResourceLocation VANILLA_WIDGETS = new ResourceLocation("textures/gui/widgets.png");
 
     @Unique private static final ResourceLocation CORROSION_ARMOR = Phantasm.makeID("textures/gui/corrosion_armor.png");
     @Unique private static final ResourceLocation CORROSION_ATTACK = Phantasm.makeID("textures/gui/corrosion_attack_indicator.png");

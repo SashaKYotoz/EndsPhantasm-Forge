@@ -2,6 +2,7 @@ package net.lyof.phantasm.mixin;
 
 import net.lyof.phantasm.entity.access.PolyppieCarrier;
 import net.lyof.phantasm.screen.access.PolyppieInventory;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -28,8 +29,11 @@ public abstract class InventoryMenuMixin extends AbstractContainerMenu implement
     protected InventoryMenuMixin(@Nullable MenuType<?> type, int syncId) {
         super(type, syncId);
     }
-    @Unique private Slot phantasm_slot = null;
-    @Unique private boolean phantasm_visible = true;
+
+    @Unique
+    private Slot phantasm_slot = null;
+    @Unique
+    private boolean phantasm_visible = true;
 
     @Inject(method = "<init>", at = @At("TAIL"))
     private void initPolyppieScreenHandler(Inventory inventory, boolean onServer, Player owner, CallbackInfo ci) {
@@ -50,6 +54,7 @@ public abstract class InventoryMenuMixin extends AbstractContainerMenu implement
             });
         }
     }
+
     @Inject(method = "quickMoveStack", at = @At("HEAD"), cancellable = true)
     public void quickPolyppieMove(Player player, int slotid, CallbackInfoReturnable<ItemStack> cir) {
         Slot slot = this.getSlot(slotid);
@@ -77,6 +82,7 @@ public abstract class InventoryMenuMixin extends AbstractContainerMenu implement
     @Override
     public boolean phantasm_isEnabled() {
         return InventoryMenuMixin.this.owner instanceof PolyppieCarrier carrier
+                && !InventoryMenuMixin.this.owner.getItemBySlot(EquipmentSlot.CHEST).getItem().getDescriptionId().contains("backpack")
                 && carrier.getCarriedPolyppie() != null;
     }
 

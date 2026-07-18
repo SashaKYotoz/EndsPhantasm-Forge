@@ -105,17 +105,17 @@ public class EndDataCompat {
 
         if (json.has("weight")) {
             double weight = json.get("weight").getAsDouble();
-            add(ResourceLocation.parse(json.get("biome").getAsString()), () -> -weight);
+            add(new ResourceLocation(json.get("biome").getAsString()), () -> -weight);
         }
         else if (json.has("parameters")) {
             JsonObject noise = new JsonObject();
             noise.add("biome", json.get("biome"));
             noise.add("parameters", json.get("parameters"));
-            add(ResourceLocation.parse(json.get("biome").getAsString()), noise);
+            add(new ResourceLocation(json.get("biome").getAsString()), noise);
         }
 
         if (json.has("surface_rule")) {
-            addRules(ResourceLocation.parse(json.get("biome").getAsString()), json.get("surface_rule").getAsJsonObject());
+            addRules(new ResourceLocation(json.get("biome").getAsString()), json.get("surface_rule").getAsJsonObject());
         }
     }
 

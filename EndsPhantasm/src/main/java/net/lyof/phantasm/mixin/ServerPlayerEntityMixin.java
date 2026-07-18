@@ -37,12 +37,10 @@ public abstract class ServerPlayerEntityMixin extends Entity implements MixinAcc
     @Shadow
     private boolean seenCredits;
     @Shadow
-    private boolean isChangingDimension;
-    @Shadow
     public boolean wonGame;
 
     @Unique
-    private static final ResourceLocation CREDITS_ADVANCEMENT = ResourceLocation.fromNamespaceAndPath("minecraft", "end/kill_dragon");
+    private static final ResourceLocation CREDITS_ADVANCEMENT = new ResourceLocation("minecraft", "end/kill_dragon");
 
     @Unique
     private boolean seenBeginning = false;

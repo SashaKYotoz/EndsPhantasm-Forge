@@ -99,7 +99,7 @@ public class ModConfig {
     static final String DEFAULT_CONFIG = """
 {
    "TECHNICAL": {
-     "VERSION_DO_NOT_EDIT": 2.0,
+     "VERSION_DO_NOT_EDIT": 2.01,
      "FORCE_RESET": false
    },
 

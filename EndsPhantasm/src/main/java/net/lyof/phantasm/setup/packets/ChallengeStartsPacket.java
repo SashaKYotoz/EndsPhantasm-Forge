@@ -14,10 +14,14 @@ import net.minecraftforge.network.NetworkEvent;
 import java.util.function.Supplier;
 
 public class ChallengeStartsPacket {
-    private BlockPos pos;
+    private final BlockPos pos;
 
     public ChallengeStartsPacket(FriendlyByteBuf buffer) {
         this.pos = buffer.readBlockPos();
+    }
+
+    public ChallengeStartsPacket(BlockPos pos) {
+        this.pos = pos;
     }
 
     public void toBytes(FriendlyByteBuf buffer) {
@@ -34,7 +38,7 @@ public class ChallengeStartsPacket {
     static class ClientPacketHandler {
         public static void handle(BlockPos pos) {
             Minecraft client = Minecraft.getInstance();
-            if (client.level.getBlockEntity(pos) instanceof ChallengeRuneBlockEntity rune) {
+            if (client.level != null && client.level.getBlockEntity(pos) instanceof ChallengeRuneBlockEntity rune) {
                 rune.startChallenge();
                 rune.addChallenger(client.player);
                 client.levelRenderer.playStreamingMusic(ModSounds.CHALLENGE, pos);

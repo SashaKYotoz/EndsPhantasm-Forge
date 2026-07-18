@@ -1,6 +1,5 @@
 package net.lyof.phantasm.setup.packets;
 
-import io.netty.buffer.Unpooled;
 import net.lyof.phantasm.entity.custom.PolyppieEntity;
 import net.lyof.phantasm.setup.ReloadListener;
 import net.minecraft.network.FriendlyByteBuf;
@@ -9,7 +8,7 @@ import net.minecraftforge.network.NetworkEvent;
 import java.util.function.Supplier;
 
 public class ClientInitializePacket {
-    private FriendlyByteBuf buffer = new FriendlyByteBuf(Unpooled.buffer());
+    private final FriendlyByteBuf buffer;
 
     public ClientInitializePacket(FriendlyByteBuf buffer) {
         this.buffer = buffer;

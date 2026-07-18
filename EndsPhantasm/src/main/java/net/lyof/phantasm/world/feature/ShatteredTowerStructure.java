@@ -26,7 +26,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class ShatteredTowerStructure extends Feature<CountConfiguration> {
     public static final int R = 7;
 
-    private static final ResourceLocation DRAGLING = ResourceLocation.fromNamespaceAndPath("unusualend", "dragling");
+    private static final ResourceLocation DRAGLING = new ResourceLocation("unusualend", "dragling");
     private static final ResourceLocation LOOT_TABLE = Phantasm.makeID("chests/shattered_tower");
     private static final ResourceLocation CHALLENGE = Phantasm.makeID("shattered_tower");
     public static final Feature<CountConfiguration> INSTANCE = new ShatteredTowerStructure(CountConfiguration.CODEC);

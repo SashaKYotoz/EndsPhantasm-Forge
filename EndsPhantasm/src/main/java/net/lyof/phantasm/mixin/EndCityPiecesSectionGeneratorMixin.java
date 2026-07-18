@@ -29,7 +29,7 @@ import java.util.List;
 public abstract class EndCityPiecesSectionGeneratorMixin extends TemplateStructurePiece {
     @Unique
     private static final ResourceLocation CHALLENGE_ID = Phantasm.makeID("elytra");
-    @Unique private static final ResourceLocation STRUCTURE_ID = ResourceLocation.fromNamespaceAndPath("minecraft", "end_city/ship");
+    @Unique private static final ResourceLocation STRUCTURE_ID = new ResourceLocation("minecraft", "end_city/ship");
     @Shadow
     protected abstract ResourceLocation makeTemplateLocation();
 

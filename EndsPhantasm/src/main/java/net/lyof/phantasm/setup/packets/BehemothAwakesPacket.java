@@ -12,12 +12,16 @@ import net.minecraftforge.network.NetworkEvent;
 import java.util.function.Supplier;
 
 public class BehemothAwakesPacket {
-    private int selfId = 0;
-    private int targetId = 0;
+    private final int selfId;
+    private final int targetId;
 
     public BehemothAwakesPacket(FriendlyByteBuf buffer) {
         this.selfId = buffer.readInt();
         this.targetId = buffer.readInt();
+    }
+    public BehemothAwakesPacket(int  selfId, int targetId) {
+        this.selfId = selfId;
+        this.targetId = targetId;
     }
 
     public void toBytes(FriendlyByteBuf buffer) {

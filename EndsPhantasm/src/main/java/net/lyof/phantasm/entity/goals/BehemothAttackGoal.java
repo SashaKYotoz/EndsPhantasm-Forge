@@ -14,6 +14,6 @@ public class BehemothAttackGoal extends MeleeAttackGoal {
 
     @Override
     public boolean canUse() {
-        return this.self.animation == BehemothAnimation.WALKING && super.canUse();
+        return this.self.getAnimation() == BehemothAnimation.WALKING && super.canUse();
     }
 }

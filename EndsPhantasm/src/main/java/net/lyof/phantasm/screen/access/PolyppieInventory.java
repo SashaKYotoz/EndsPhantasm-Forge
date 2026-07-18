@@ -1,11 +1,9 @@
 package net.lyof.phantasm.screen.access;
 
-import io.netty.buffer.Unpooled;
 import net.lyof.phantasm.entity.access.PolyppieCarrier;
 import net.lyof.phantasm.entity.custom.PolyppieEntity;
 import net.lyof.phantasm.setup.ModPackets;
 import net.lyof.phantasm.setup.packets.PolyppieClientUpdatePacket;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -95,11 +93,8 @@ public class PolyppieInventory implements Container {
         int phantasm_getSlotY();
 
         static void onButtonClick(Player player, int id) {
-            if (player.level().isClientSide()) {
-                FriendlyByteBuf buf = new FriendlyByteBuf(Unpooled.buffer());
-                buf.writeInt(id);
-                ModPackets.sendToServer(new PolyppieClientUpdatePacket(buf));
-            }
+            if (player.level().isClientSide())
+                ModPackets.sendToServer(new PolyppieClientUpdatePacket(id));
 
             if (player instanceof PolyppieCarrier carrier) {
                 switch (id) {
